@@ -15,6 +15,19 @@ router.get('/getAccount/:id',
     }
 );
 
+router.get('/getPin/:id',
+    function(request, response){
+        card.getPin(request.params.id, function(err,dbResult){
+            if(err){
+                response.json(err.errno);
+            }else{
+                console.log(dbResult);
+                response.json(dbResult[0]);
+            }
+        })
+    }
+);
+
 module.exports = router;
 
 
