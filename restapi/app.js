@@ -3,9 +3,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var actionsRouter = require('./routes/actions');
 
 var app = express();
 const basicAuth = require('express-basic-auth');
@@ -16,7 +14,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(basicAuth({users: { 'admin': '1234'}}));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/actions', actionsRouter);
 
 module.exports = app;
+
