@@ -1,32 +1,20 @@
-/*const express = require('express');
+const express = require('express');
 const router = express.Router();
 const actions  = require('../models/actions_model');
 
-
-router.post('/withdraw_action',
+router.get('/getRecent/:id',
     function(request, response){
-        actions.withdrawAction(request.body, function(err, dbResult){
-            if(err){
-                response.json(err);
-             }else{
-                 response.json(dbResult.affectedRows);
-             }
-        });
-    });
-
-router.post('/transfer_action',
-    function(request, response){
-        actions.transferAction(request.body, function(err, dbResult){
+        actions.getRecent(request.params.id, function(err, dbResult){
             if(err){
                 response.json(err);
             }else{
-                response.json(dbResult.affectedRows);
+                response.json(dbResult);
             }
         });
     });
+
 
 module.exports = router;
 
 
 
-*/
