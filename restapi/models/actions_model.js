@@ -1,22 +1,13 @@
-/*const db = require('../database');
+const db = require('../database');
 
 const actions = {
 
-    withdrawAction: function(procedure_params, callback){
-        return db.query(
-            'CALL withdraw_money(?,?)',
-            [procedure_params.id, procedure_params.amount],
-            callback
-        );
-    },
+    getRecent: function(id, callback){
+        return db.query('SELECT amount,date,action_type FROM account_action JOIN account ON account.id_account = account_action.id_account where account.id_account = ? order by date DESC LIMIT 10',[id],callback);
 
-    transferAction: function(procedure_params, callback){
-        return db.query(
-            'CALL transfer_money(?,?,?)',
-            [procedure_params.id_sender, procedure_params.id_recipient, procedure_params.amount],
-            callback
-        );
     }
 };
 
-module.exports = actions;*/
+
+module.exports = actions;
+
