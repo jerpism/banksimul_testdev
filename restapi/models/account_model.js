@@ -17,6 +17,11 @@ const account = {
             [procedure_params.id_sender, procedure_params.id_recipient, procedure_params.amount],
             callback
         );
+    },
+
+    getBalance: function(id, callback){
+        return db.query(
+            'SELECT balance FROM account WHERE id_account=?',[id],callback);
     }
 };
 
