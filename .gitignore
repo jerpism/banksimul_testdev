@@ -1,1 +1,5 @@
 node_modules/
+/build*
+qt_frontend/build*
+qt_frontend/frontend/frontend.pro.user
+*.gch
