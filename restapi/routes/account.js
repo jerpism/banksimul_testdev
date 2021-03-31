@@ -25,4 +25,15 @@ router.post('/transfer_action',
         });
     });
 
+router.get('/getBalance/:id',
+    function(request, response){
+        account.getBalance(request.params.id, function(err, dbResult){
+            if(err){
+                response.json(err);
+            }else{
+                response.json(dbResult[0].balance);
+            }
+        });
+    });
+
 module.exports = router;
