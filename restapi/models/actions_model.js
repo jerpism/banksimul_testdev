@@ -1,4 +1,4 @@
-const db = require('../database');
+/*const db = require('../database');
 
 const actions = {
 
@@ -19,4 +19,4 @@ const actions = {
     }
 };
 
-module.exports = actions;
+module.exports = actions;*/

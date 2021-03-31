@@ -9,7 +9,7 @@ router.get('/getAccount/:id',
                 response.json(err.errno);
             }else{
                 console.log(dbResult);
-                response.json(dbResult[0]);
+                response.json(dbResult[0].id_account);
             }
         })
     }
