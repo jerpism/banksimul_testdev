@@ -19,9 +19,9 @@ const account = {
         );
     },
 
-    getBalance: function(id, callback, rows){
+    getBalance: function(id, callback){
          return db.query(
-            'SELECT balance FROM account WHERE id_account=?',[id],callback,rows);
+            'SELECT balance FROM account WHERE id_account=?',[id],callback);
     }
 };
 module.exports = account;
