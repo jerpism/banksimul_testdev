@@ -27,7 +27,7 @@ router.post('/transfer_action',
 
 router.get('/getBalance/:id',
     function(request, response){
-        account.getBalance(request.params.id, function(err, dbResult, rows){
+        account.getBalance(request.params.id, function(err, dbResult){
             if(err){
                 response.json(err.errno);
                 console.log(err);
