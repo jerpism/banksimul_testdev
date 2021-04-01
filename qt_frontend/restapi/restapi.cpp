@@ -1,70 +1,46 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "restapi.h"
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+Restapi::Restapi()
 {
-    ui->setupUi(this);
-    tili = "1";
     credentials="admin:1234";
     url = "http://91.145.117.152:3000";
-    objectRestapi = new Restapi;
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-    delete objectRestapi;
-    ui = nullptr;
-    objectRestapi = nullptr;
-}
 
-/*double MainWindow::getBalance(){
-    tili = ui->accLineEdit->text();
+double Restapi::getBalance(QString tili){
     QNetworkRequest request(url+"/account/getBalance/"+tili);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QByteArray data = credentials.toLocal8Bit().toBase64();
     QString headerData = "Basic " + data;
 
     request.setRawHeader("Authorization", headerData.toLocal8Bit());
-    balanceManager = new QNetworkAccessManager(this);
+    balanceManager = new QNetworkAccessManager;
     QEventLoop loop;
     balanceReply = balanceManager->get(request);
     connect(balanceReply, SIGNAL(finished()), &loop, SLOT(quit()));
-    qDebug() << "ennen looppia";
     loop.exec();
-    qDebug() << "loopin jälkeen";
+
     QString response = balanceReply->readAll();
     qDebug() << response;
+
     balanceReply->deleteLater();
     balanceManager->deleteLater();
 
     return response.toDouble();
-}*/
-
-void MainWindow::on_pushButton_clicked()
-{
-    tili = ui->accLineEdit->text();
-   double saldo = objectRestapi->getBalance(tili);
-
-  ui->lineEdit->setText(QString::number(saldo, 'f', 2));
-
 }
 
 
-void MainWindow::on_nostaButton_clicked()
-{
-    tili = ui->accLineEdit->text();
-    QString amount = ui->nostoLineEdit->text();
-/*    QJsonObject json_obj;
-    json_obj.insert("id", tili);
+void Restapi::withdrawMoney(QString id, QString amount){
+    QJsonObject json_obj;
+    json_obj.insert("id", id);
     json_obj.insert("amount", amount);
-    double saldo = getBalance();
+    double saldo = this->getBalance(id);
 
-    if(saldo-amount.toDouble() < 0){
-        ui->virheLabel->setText("Tilillä ei ole tarpeeksi rahaa");
+
+    if(saldo - amount.toDouble() < 0 ){
+        qDebug() << "PRöööööhhh :DDDD";
     }else{
+
 
     QNetworkRequest request(url+"/account/withdraw_action");
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -73,25 +49,19 @@ void MainWindow::on_nostaButton_clicked()
 
     request.setRawHeader("Authorization", headerData.toLocal8Bit());
 
-    withdrawManager = new QNetworkAccessManager(this);
+    withdrawManager = new QNetworkAccessManager;
     connect(withdrawManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(withdrawSlot(QNetworkReply*)));
     withdrawReply=withdrawManager->post(request, QJsonDocument(json_obj).toJson());
 
-    }*/
-
-    objectRestapi->withdrawMoney(tili, amount);
-
+    }
 }
 
-void MainWindow::withdrawSlot(QNetworkReply *reply)
+
+void Restapi::withdrawSlot(QNetworkReply* reply)
 {
     QByteArray response_data=reply->readAll();
     qDebug() << response_data;
-
-    ui->virheLabel->setText("Nosto toimitettiin");
-
     withdrawManager->deleteLater();
     withdrawReply->deleteLater();
     reply->deleteLater();
-
 }
