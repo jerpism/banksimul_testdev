@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "restapi.h"
 #include <QMainWindow>
 #include <QtNetwork>
 #include <QNetworkAccessManager>
@@ -21,7 +22,7 @@ public:
 
 private slots:
     void on_pushButton_clicked();
-    double getBalance();
+  //  double getBalance();
     void withdrawSlot(QNetworkReply *reply);
 
     void on_nostaButton_clicked();
@@ -31,6 +32,7 @@ private:
     QString credentials;
     QString tili;
     QString url;
+    Restapi *objectRestapi;
 
 
     QNetworkAccessManager *balanceManager;
