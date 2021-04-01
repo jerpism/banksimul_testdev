@@ -1,4 +1,3 @@
-
 const db = require('../database');
 
 const account = {
@@ -9,6 +8,7 @@ const account = {
             [procedure_params.id, procedure_params.amount],
             callback
         );
+            
     },
 
     transferAction: function(procedure_params, callback){
@@ -20,9 +20,8 @@ const account = {
     },
 
     getBalance: function(id, callback){
-        return db.query(
+         return db.query(
             'SELECT balance FROM account WHERE id_account=?',[id],callback);
     }
 };
-
 module.exports = account;
