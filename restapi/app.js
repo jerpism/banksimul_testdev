@@ -8,6 +8,7 @@ const accountRouter = require('./routes/account');
 const cardRouter = require('./routes/card');
 const loginRouter = require('./routes/login');
 const actionsRouter = require('./routes/actions');
+const cryptoaccountRouter = require('./routes/cryptoaccount');
 
 var app = express();
 app.use(logger('dev'));
@@ -21,6 +22,7 @@ app.use('/login', loginRouter);
 app.use('/account', accountRouter);
 app.use('/card', cardRouter);
 app.use('/actions', actionsRouter);
+app.use('/cryptoaccount', cryptoaccountRouter);
 
 module.exports = app;
 
