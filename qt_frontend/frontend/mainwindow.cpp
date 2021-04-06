@@ -6,10 +6,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    tili = "1";
     credentials="admin:1234";
     url = "http://91.145.117.152:3000";
     objectRestapi = new Restapi;
+    connect(objectRestapi, SIGNAL(errorSignal(QString)), this, SLOT(errorSlot(QString)));
 }
 
 MainWindow::~MainWindow()
@@ -18,6 +18,12 @@ MainWindow::~MainWindow()
     delete objectRestapi;
     ui = nullptr;
     objectRestapi = nullptr;
+}
+
+void MainWindow::errorSlot(QString virhe){
+    qDebug() << "Virhe otettu vastaan: " + virhe;
+    ui->virheLabel->setText(virhe);
+    ui->lineEdit->setText("");
 }
 
 /*double MainWindow::getBalance(){
@@ -45,8 +51,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    tili = ui->accLineEdit->text();
-   double saldo = objectRestapi->getBalance(tili);
+   double saldo = objectRestapi->getBalance();
 
   ui->lineEdit->setText(QString::number(saldo, 'f', 2));
 
@@ -55,7 +60,6 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_nostaButton_clicked()
 {
-    tili = ui->accLineEdit->text();
     QString amount = ui->nostoLineEdit->text();
 /*    QJsonObject json_obj;
     json_obj.insert("id", tili);
@@ -79,7 +83,7 @@ void MainWindow::on_nostaButton_clicked()
 
     }*/
 
-    objectRestapi->withdrawMoney(tili, amount);
+    objectRestapi->withdrawMoney(amount);
 
 }
 
@@ -94,4 +98,9 @@ void MainWindow::withdrawSlot(QNetworkReply *reply)
     withdrawReply->deleteLater();
     reply->deleteLater();
 
+}
+
+void MainWindow::on_cardPushButton_clicked()
+{
+   objectRestapi->setAccount(ui->cardLineEdit->text());
 }
