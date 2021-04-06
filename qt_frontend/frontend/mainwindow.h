@@ -31,6 +31,8 @@ private slots:
 
     void errorSlot(QString);
 
+    void on_siirtoPushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString credentials;

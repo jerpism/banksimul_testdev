@@ -17,9 +17,12 @@ public:
     double getBalance();
     void withdrawMoney(QString);
     void setAccount(QString);
+    void transferMoney(QString, QString);
+
 private slots:
     void withdrawSlot(QNetworkReply *reply);
     void accSlot(QNetworkReply *reply);
+    void transferSlot(QNetworkReply *reply);
 
 signals:
     void errorSignal(QString);
@@ -36,6 +39,9 @@ private:
 
     QNetworkAccessManager *accManager;
     QNetworkReply *accReply;
+
+    QNetworkAccessManager *transferManager;
+    QNetworkReply *transferReply;
 };
 
 #endif // RESTAPI_H
