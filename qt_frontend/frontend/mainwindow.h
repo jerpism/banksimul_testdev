@@ -27,6 +27,10 @@ private slots:
 
     void on_nostaButton_clicked();
 
+    void on_cardPushButton_clicked();
+
+    void errorSlot(QString);
+
 private:
     Ui::MainWindow *ui;
     QString credentials;

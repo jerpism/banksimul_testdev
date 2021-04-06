@@ -6,9 +6,20 @@ Restapi::Restapi()
     url = "http://91.145.117.152:3000";
 }
 
+void Restapi::setAccount(QString card){
+   QNetworkRequest request(url+"/card/getAccount/"+card);
+   request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+   QByteArray data = credentials.toLocal8Bit().toBase64();
+   QString headerData = "Basic " + data;
 
-double Restapi::getBalance(QString tili){
-    QNetworkRequest request(url+"/account/getBalance/"+tili);
+   request.setRawHeader("Authorization", headerData.toLocal8Bit());
+   accManager = new QNetworkAccessManager;
+   connect(accManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(accSlot(QNetworkReply*)));
+   accReply = accManager->get(request);
+}
+
+double Restapi::getBalance(){
+    QNetworkRequest request(url+"/account/getBalance/"+account);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QByteArray data = credentials.toLocal8Bit().toBase64();
     QString headerData = "Basic " + data;
@@ -30,17 +41,17 @@ double Restapi::getBalance(QString tili){
 }
 
 
-void Restapi::withdrawMoney(QString id, QString amount){
+void Restapi::withdrawMoney(QString amount){
     QJsonObject json_obj;
-    json_obj.insert("id", id);
+    json_obj.insert("id", account);
     json_obj.insert("amount", amount);
-    double saldo = this->getBalance(id);
+    double saldo = this->getBalance();
 
-
-    if(saldo - amount.toDouble() < 0 ){
-        qDebug() << "PRöööööhhh :DDDD";
+    if(amount.toDouble() < 0){
+        emit errorSignal("Et voi nostaa negatiivisia summia");
+    }else if(saldo - amount.toDouble() < 0 ){
+        emit errorSignal("Tilillä ei ole tarpeeksi rahaa");
     }else{
-
 
     QNetworkRequest request(url+"/account/withdraw_action");
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -64,4 +75,22 @@ void Restapi::withdrawSlot(QNetworkReply* reply)
     withdrawManager->deleteLater();
     withdrawReply->deleteLater();
     reply->deleteLater();
+}
+
+void Restapi::accSlot(QNetworkReply* reply){
+    QByteArray response_data=reply->readAll();
+    qDebug() << response_data;
+
+    if(response_data == "\"Account not found\""){
+        qDebug() << "Tiliä ei löytynyt";
+        emit errorSignal("Tili hukassa");
+        account = "404";
+    }else{
+        account = response_data;
+    }
+
+    accManager->deleteLater();
+    accReply->deleteLater();
+    reply->deleteLater();
+
 }
