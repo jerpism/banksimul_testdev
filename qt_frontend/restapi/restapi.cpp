@@ -18,6 +18,10 @@ void Restapi::setAccount(QString card){
    accReply = accManager->get(request);
 }
 
+void Restapi::setCryptoAccount(QString card){
+
+}
+
 void Restapi::transferMoney(QString recipient, QString amount){
     QJsonObject json_obj;
     json_obj.insert("id_sender", account);

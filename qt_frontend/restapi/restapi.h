@@ -17,6 +17,7 @@ public:
     double getBalance();
     void withdrawMoney(QString);
     void setAccount(QString);
+    void setCryptoAccount(QString);
     void transferMoney(QString, QString);
 
 private slots:
