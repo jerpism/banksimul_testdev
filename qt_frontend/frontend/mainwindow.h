@@ -22,8 +22,6 @@ public:
 
 private slots:
     void on_pushButton_clicked();
-  //  double getBalance();
-    void withdrawSlot(QNetworkReply *reply);
 
     void on_nostaButton_clicked();
 
@@ -33,19 +31,31 @@ private slots:
 
     void on_siirtoPushButton_clicked();
 
+    void on_startTestPushButton_clicked();
+
+    void on_closePushButton_clicked();
+
+    void on_nosta20Button_clicked();
+
+    void on_nosta40Button_clicked();
+
+    void on_nosta60Button_clicked();
+
+    void on_nosta100Button_clicked();
+
+    void on_nosta200Button_clicked();
+
+    void on_nosta500Button_clicked();
+
+    void on_closeNostoPushButton_clicked();
+
+    void on_startNostoPushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString credentials;
     QString tili;
     QString url;
     Restapi *objectRestapi;
-
-
-    QNetworkAccessManager *balanceManager;
-    QNetworkReply *balanceReply;
-
-    QNetworkAccessManager *withdrawManager;
-    QNetworkReply *withdrawReply;
-
 };
 #endif // MAINWINDOW_H
