@@ -3,9 +3,6 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const login = require('../models/login_model');
 
-const saltRounds=10;
-
-
 router.post('/', 
   function(request, response) {
     if(request.body.id && request.body.pin){
@@ -14,23 +11,22 @@ router.post('/',
         login.checkPin(id, function(dbError, dbResult) {
           if(dbError){
             response.json(dbError);
-          }else{
+          }
+          else{
             if (dbResult.length > 0) {
-                if(pin == dbResult[0].pin) {
+              bcrypt.compare(pin,dbResult[0].pin, function(err,compareResult) {
+                if(compareResult) {
                   console.log("succes");
                   response.send(true);
                 }
                 else {
                     console.log("wrong pin");
-                    console.log("inserted pin "+pin);
-                    console.log("correct pin "+dbResult[0].pin);
-                    console.log(pin);
                     response.send(false);
                 }			
                   response.end();
               }
-              
-            
+              );
+            }
             else{
               console.log("user does not exists");
               response.send(false);

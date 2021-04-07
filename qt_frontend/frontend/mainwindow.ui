@@ -6,113 +6,268 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>871</width>
+    <height>663</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="">
+   <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>202</x>
-      <y>130</y>
-      <width>298</width>
-      <height>226</height>
+      <x>0</x>
+      <y>10</y>
+      <width>801</width>
+      <height>541</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QLineEdit" name="cardLineEdit"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="cardPushButton">
-         <property name="text">
-          <string>Aseta kortti</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="0" column="1">
-      <layout class="QVBoxLayout" name="verticalLayout_6">
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="currentIndex">
+     <number>2</number>
+    </property>
+    <widget class="QWidget" name="page">
+     <widget class="QPushButton" name="startTestPushButton">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>410</y>
+        <width>141</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Aloita!</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="startNostoPushButton">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>410</y>
+        <width>151</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Nosto</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="nostopage">
+     <widget class="QPushButton" name="nosta20Button">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>30</y>
+        <width>181</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>20€</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="nosta40Button">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>180</y>
+        <width>181</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>40€</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="nosta60Button">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>350</y>
+        <width>181</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>60€</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="nosta200Button">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>180</y>
+        <width>181</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>200€</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="nosta100Button">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>30</y>
+        <width>181</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>100€</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="nosta500Button">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>350</y>
+        <width>181</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>500€</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="closeNostoPushButton">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>470</y>
+        <width>191</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Palaa</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="virheLabel">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>30</y>
+        <width>296</width>
+        <height>68</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="testpage">
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>120</y>
+        <width>298</width>
+        <height>290</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="1" column="0">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>Vastaanottajan tili</string>
-           </property>
-          </widget>
+          <widget class="QLineEdit" name="lineEdit"/>
          </item>
          <item>
-          <widget class="QLineEdit" name="accLineEdit"/>
+          <widget class="QPushButton" name="pushButton">
+           <property name="text">
+            <string>Hae saldo</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item row="1" column="1">
+        <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
-          <widget class="QLabel" name="amountLabel">
+          <widget class="QLineEdit" name="nostoLineEdit"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="nostaButton">
            <property name="text">
-            <string>Määrä</string>
+            <string>Nosta</string>
            </property>
           </widget>
          </item>
+        </layout>
+       </item>
+       <item row="0" column="1">
+        <layout class="QVBoxLayout" name="verticalLayout_6">
          <item>
-          <widget class="QLineEdit" name="transferLineEdit"/>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Vastaanottajan tili</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="accLineEdit"/>
+           </item>
+          </layout>
          </item>
          <item>
-          <widget class="QPushButton" name="siirtoPushButton">
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QLabel" name="amountLabel">
+             <property name="text">
+              <string>Määrä</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="transferLineEdit"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="siirtoPushButton">
+             <property name="text">
+              <string>Siirto</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="0">
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QLineEdit" name="cardLineEdit"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="cardPushButton">
            <property name="text">
-            <string>Siirto</string>
+            <string>Aseta kortti</string>
            </property>
           </widget>
          </item>
         </layout>
        </item>
       </layout>
-     </item>
-     <item row="1" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <widget class="QLineEdit" name="lineEdit"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Hae saldo</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="1" column="1">
-      <layout class="QVBoxLayout" name="verticalLayout_4">
-       <item>
-        <widget class="QLineEdit" name="nostoLineEdit"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="nostaButton">
-         <property name="text">
-          <string>Nosta</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="2" column="0" colspan="2">
-      <widget class="QLabel" name="virheLabel">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-    </layout>
+     </widget>
+     <widget class="QPushButton" name="closePushButton">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>450</y>
+        <width>241</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>SULJE</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -120,7 +275,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>871</width>
      <height>22</height>
     </rect>
    </property>

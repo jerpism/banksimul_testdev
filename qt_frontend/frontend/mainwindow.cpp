@@ -45,19 +45,6 @@ void MainWindow::on_nostaButton_clicked()
 
 }
 
-void MainWindow::withdrawSlot(QNetworkReply *reply)
-{
-    QByteArray response_data=reply->readAll();
-    qDebug() << response_data;
-
-    ui->virheLabel->setText("Nosto toimitettiin");
-
-    withdrawManager->deleteLater();
-    withdrawReply->deleteLater();
-    reply->deleteLater();
-
-}
-
 void MainWindow::on_cardPushButton_clicked()
 {
    objectRestapi->setAccount(ui->cardLineEdit->text());
@@ -68,4 +55,58 @@ void MainWindow::on_siirtoPushButton_clicked()
     QString vastaanottaja = ui->accLineEdit->text();
     QString maara = ui->transferLineEdit->text();
     objectRestapi->transferMoney(vastaanottaja, maara);
+}
+
+void MainWindow::on_startTestPushButton_clicked()
+{
+   ui->stackedWidget->setCurrentIndex(2);
+}
+
+void MainWindow::on_closePushButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+void MainWindow::on_nosta20Button_clicked()
+{
+    objectRestapi->withdrawMoney("20");
+}
+
+void MainWindow::on_nosta40Button_clicked()
+{
+    objectRestapi->withdrawMoney("40");
+
+}
+
+void MainWindow::on_nosta60Button_clicked()
+{
+    objectRestapi->withdrawMoney("60");
+
+}
+
+void MainWindow::on_nosta100Button_clicked()
+{
+    objectRestapi->withdrawMoney("100");
+
+}
+
+void MainWindow::on_nosta200Button_clicked()
+{
+    objectRestapi->withdrawMoney("200");
+
+}
+
+void MainWindow::on_nosta500Button_clicked()
+{
+    objectRestapi->withdrawMoney("500");
+}
+
+void MainWindow::on_closeNostoPushButton_clicked()
+{
+   ui->stackedWidget->setCurrentIndex(0);
+}
+
+void MainWindow::on_startNostoPushButton_clicked()
+{
+   ui->stackedWidget->setCurrentIndex(1);
 }
