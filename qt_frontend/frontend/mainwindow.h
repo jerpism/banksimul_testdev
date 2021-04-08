@@ -7,6 +7,7 @@
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
 #include <QDebug>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,8 +20,11 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void startIdleTimer();
+    void stopIdleTimer();
 
 private slots:
+    void returnToMenu();
     void on_pushButton_clicked();
 
     void on_nostaButton_clicked();
@@ -57,5 +61,6 @@ private:
     QString tili;
     QString url;
     Restapi *objectRestapi;
+    QTimer *timer;
 };
 #endif // MAINWINDOW_H

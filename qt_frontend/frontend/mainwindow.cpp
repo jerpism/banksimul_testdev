@@ -9,7 +9,9 @@ MainWindow::MainWindow(QWidget *parent)
     credentials="admin:1234";
     url = "http://91.145.117.152:3000";
     objectRestapi = new Restapi;
+    timer = new QTimer(this);
     connect(objectRestapi, SIGNAL(errorSignal(QString)), this, SLOT(errorSlot(QString)));
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 MainWindow::~MainWindow()
@@ -25,6 +27,19 @@ void MainWindow::errorSlot(QString virhe){
     ui->virheLabel->setText(virhe);
 
     QTimer::singleShot(10000, this, [&]() { ui->virheLabel->setText("");});
+}
+
+void MainWindow::startIdleTimer(){
+   connect(timer, SIGNAL(timeout()), this, SLOT(returnToMenu()));
+   timer->start(10000);
+}
+
+void MainWindow::stopIdleTimer(){
+    timer->stop();
+}
+
+void MainWindow::returnToMenu(){
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 
@@ -65,11 +80,14 @@ void MainWindow::on_startTestPushButton_clicked()
 void MainWindow::on_closePushButton_clicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
+    stopIdleTimer();
 }
 
 void MainWindow::on_nosta20Button_clicked()
 {
     objectRestapi->withdrawMoney("20");
+//    stopIdleTimer();
+    startIdleTimer();
 }
 
 void MainWindow::on_nosta40Button_clicked()
@@ -109,4 +127,7 @@ void MainWindow::on_closeNostoPushButton_clicked()
 void MainWindow::on_startNostoPushButton_clicked()
 {
    ui->stackedWidget->setCurrentIndex(1);
+   startIdleTimer();
+//   QTimer::singleShot(10000, this, SLOT(returnToMenu()));
 }
+
