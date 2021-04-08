@@ -63,7 +63,7 @@ double Restapi::getBalance(){
     loop.exec();
 
     QString response = balanceReply->readAll();
-    qDebug() << response;
+    qDebug() << "balance vastaus: "+response;
 
     balanceReply->deleteLater();
     balanceManager->deleteLater();
@@ -102,7 +102,7 @@ void Restapi::withdrawMoney(QString amount){
 void Restapi::withdrawSlot(QNetworkReply* reply)
 {
     QByteArray response_data=reply->readAll();
-    qDebug() << response_data;
+    qDebug() << "vastaus: " +response_data;
     withdrawManager->deleteLater();
     withdrawReply->deleteLater();
     reply->deleteLater();

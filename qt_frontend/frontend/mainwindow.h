@@ -22,9 +22,11 @@ public:
     ~MainWindow();
     void startIdleTimer();
     void stopIdleTimer();
+    void startMenuIdleTimer();
 
 private slots:
     void returnToMenu();
+    void returnToLogin();
     void on_pushButton_clicked();
 
     void on_nostaButton_clicked();
@@ -54,6 +56,8 @@ private slots:
     void on_closeNostoPushButton_clicked();
 
     void on_startNostoPushButton_clicked();
+
+    void on_loginPushButton_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -17,8 +17,8 @@
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>10</y>
+      <x>40</x>
+      <y>30</y>
       <width>801</width>
       <height>541</height>
      </rect>
@@ -26,7 +26,43 @@
     <property name="currentIndex">
      <number>0</number>
     </property>
-    <widget class="QWidget" name="page">
+    <widget class="QWidget" name="loginpage">
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>240</y>
+        <width>197</width>
+        <height>102</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+       <item>
+        <widget class="QLabel" name="loginLabel">
+         <property name="font">
+          <font>
+           <pointsize>24</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Tilinumerosi</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="loginLineEdit"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="loginPushButton">
+         <property name="text">
+          <string>KIRJAUDU</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="menupage">
      <widget class="QPushButton" name="startTestPushButton">
       <property name="geometry">
        <rect>
