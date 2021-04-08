@@ -34,14 +34,25 @@ void MainWindow::startIdleTimer(){
    timer->start(10000);
 }
 
+void MainWindow::startMenuIdleTimer(){
+   connect(timer, SIGNAL(timeout()), this, SLOT(returnToLogin()));
+   timer->start(15000);
+}
+
 void MainWindow::stopIdleTimer(){
     timer->stop();
 }
 
 void MainWindow::returnToMenu(){
-    ui->stackedWidget->setCurrentIndex(0);
+    stopIdleTimer();
+    ui->stackedWidget->setCurrentIndex(1);
+    startMenuIdleTimer();
 }
 
+void MainWindow::returnToLogin(){
+   timer->stop();
+   ui->stackedWidget->setCurrentIndex(0);
+}
 
 
 void MainWindow::on_pushButton_clicked()
@@ -79,14 +90,12 @@ void MainWindow::on_startTestPushButton_clicked()
 
 void MainWindow::on_closePushButton_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(0);
-    stopIdleTimer();
+    returnToMenu();
 }
 
 void MainWindow::on_nosta20Button_clicked()
 {
     objectRestapi->withdrawMoney("20");
-//    stopIdleTimer();
     startIdleTimer();
 }
 
@@ -105,7 +114,6 @@ void MainWindow::on_nosta60Button_clicked()
 void MainWindow::on_nosta100Button_clicked()
 {
     objectRestapi->withdrawMoney("100");
-
 }
 
 void MainWindow::on_nosta200Button_clicked()
@@ -121,13 +129,19 @@ void MainWindow::on_nosta500Button_clicked()
 
 void MainWindow::on_closeNostoPushButton_clicked()
 {
-   ui->stackedWidget->setCurrentIndex(0);
+    returnToMenu();
 }
 
 void MainWindow::on_startNostoPushButton_clicked()
 {
-   ui->stackedWidget->setCurrentIndex(1);
+   ui->stackedWidget->setCurrentIndex(2);
    startIdleTimer();
 //   QTimer::singleShot(10000, this, SLOT(returnToMenu()));
 }
 
+
+void MainWindow::on_loginPushButton_clicked()
+{
+   ui->stackedWidget->setCurrentIndex(1);
+   objectRestapi->setAccount(ui->loginLineEdit->text());
+}
