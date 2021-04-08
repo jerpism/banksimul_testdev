@@ -6,8 +6,8 @@ const card={
         return database.query('select account.id_account from account join card on account.id_account = card.id_account where id_card=?',[id],callback);
     },
 
-    getPin: function(id, callback){
-        return database.query('select pin from card where id_card=?',[id],callback);
+    getCryptoAccount: function(id, callback){
+        return database.query('select cryptoaccount.id_cryptoaccount from cryptoaccount join card on cryptoaccount.id_cryptoaccount = card.id_cryptoaccount where id_card=?',[id],callback);
     }
 
 };

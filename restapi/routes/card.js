@@ -18,21 +18,22 @@ router.get('/getAccount/:id',
     }
 );
 
-router.get('/getPin/:id',
+router.get('/getCryptoAccount/:id',
     function(request, response){
-        card.getPin(request.params.id, function(err,dbResult){
+        card.getCryptoAccount(request.params.id, function(err,dbResult){
             if(err){
                 response.json(err.errno);
             }else if(!dbResult[0]){
-                console.log("Card not found");
-                response.json("Card not found");
+                console.log("Account not found");
+                response.json("Account not found");
             }else{
                 console.log(dbResult);
-                response.json(dbResult[0].pin);
+                response.json(dbResult[0].id_cryptoaccount);
             }
         })
     }
 );
+
 
 module.exports = router;
 
