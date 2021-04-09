@@ -19,6 +19,15 @@ void Restapi::setAccount(QString card){
 }
 
 void Restapi::setCryptoAccount(QString card){
+   QNetworkRequest request(url+"/card/getCryptoAccount/"+card);
+   request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+   QByteArray data = credentials.toLocal8Bit().toBase64();
+   QString headerData = "Basic " + data;
+
+   request.setRawHeader("Authorization", headerData.toLocal8Bit());
+   cryptoManager = new QNetworkAccessManager;
+   connect(cryptoManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(cryptoSlot(QNetworkReply*)));
+   cryptoReply = cryptoManager->get(request);
 
 }
 
@@ -47,6 +56,44 @@ void Restapi::transferMoney(QString recipient, QString amount){
     transferReply=transferManager->post(request, QJsonDocument(json_obj).toJson());
 
     }
+}
+
+void Restapi::buyCrypto(QString amount){
+    QJsonObject json_obj;
+    json_obj.insert("id_acc", account);
+    json_obj.insert("id_crypto", cryptoaccount);
+    json_obj.insert("amount", amount);
+
+    QNetworkRequest request(url+"/cryptoAccount/buy_crypto");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QByteArray data = credentials.toLocal8Bit().toBase64();
+    QString headerData = "Basic " + data;
+
+    request.setRawHeader("Authorization", headerData.toLocal8Bit());
+
+    convertCryptoManager = new QNetworkAccessManager;
+    connect(convertCryptoManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(convertCryptoSlot(QNetworkReply*)));
+    convertCryptoReply=convertCryptoManager->post(request, QJsonDocument(json_obj).toJson());
+
+}
+
+void Restapi::sellCrypto(QString amount){
+    QJsonObject json_obj;
+    json_obj.insert("id_acc", account);
+    json_obj.insert("id_crypto", cryptoaccount);
+    json_obj.insert("amount", amount);
+
+    QNetworkRequest request(url+"/cryptoAccount/sell_crypto");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QByteArray data = credentials.toLocal8Bit().toBase64();
+    QString headerData = "Basic " + data;
+
+    request.setRawHeader("Authorization", headerData.toLocal8Bit());
+
+    convertCryptoManager = new QNetworkAccessManager;
+    connect(convertCryptoManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(convertCryptoSlot(QNetworkReply*)));
+    convertCryptoReply=convertCryptoManager->post(request, QJsonDocument(json_obj).toJson());
+
 }
 
 double Restapi::getBalance(){
@@ -115,6 +162,8 @@ void Restapi::transferSlot(QNetworkReply* reply){
 
     if(response_data == ""){
        emit errorSignal("Siirto ei onnistunut");
+    }else{
+       emit successSignal("Siirto onnistui");
     }
 
     transferManager->deleteLater();
@@ -122,10 +171,17 @@ void Restapi::transferSlot(QNetworkReply* reply){
     reply->deleteLater();
 }
 
+void Restapi::convertCryptoSlot(QNetworkReply* reply){
+   QByteArray response_data = reply->readAll();
+   qDebug() << "Krypton oston data: " + response_data;
+   convertCryptoManager->deleteLater();
+   convertCryptoReply->deleteLater();
+   reply->deleteLater();
+}
+
 void Restapi::accSlot(QNetworkReply* reply){
     QByteArray response_data=reply->readAll();
     qDebug() << response_data;
-
     if(response_data == "\"Account not found\""){
         qDebug() << "Tiliä ei löytynyt";
         emit errorSignal("Tili hukassa");
@@ -136,6 +192,24 @@ void Restapi::accSlot(QNetworkReply* reply){
 
     accManager->deleteLater();
     accReply->deleteLater();
+    reply->deleteLater();
+
+}
+
+void Restapi::cryptoSlot(QNetworkReply* reply){
+    QByteArray response_data=reply->readAll();
+    qDebug() << "ktili:" +response_data;
+
+    if(response_data == "\"Account not found\""){
+        qDebug() << "Kryptotiliä ei löytynyt";
+        emit errorSignal("Tili hukassa");
+        cryptoaccount = "404";
+    }else{
+        cryptoaccount = response_data;
+    }
+
+    cryptoManager->deleteLater();
+    cryptoReply->deleteLater();
     reply->deleteLater();
 
 }

@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     objectRestapi = new Restapi;
     timer = new QTimer(this);
     connect(objectRestapi, SIGNAL(errorSignal(QString)), this, SLOT(errorSlot(QString)));
+    connect(objectRestapi, SIGNAL(successSignal(QString)), this, SLOT(successSlot(QString)));
     ui->stackedWidget->setCurrentIndex(0);
 }
 
@@ -20,6 +21,13 @@ MainWindow::~MainWindow()
     delete objectRestapi;
     ui = nullptr;
     objectRestapi = nullptr;
+}
+
+void MainWindow::successSlot(QString response){
+   ui->stackedWidget->setCurrentIndex(4);
+   ui->successlabel->setText(response);
+   QTimer::singleShot(5000, this, SLOT(returnToMenu()));
+
 }
 
 void MainWindow::errorSlot(QString virhe){
@@ -36,7 +44,7 @@ void MainWindow::startIdleTimer(){
 
 void MainWindow::startMenuIdleTimer(){
    connect(timer, SIGNAL(timeout()), this, SLOT(returnToLogin()));
-   timer->start(15000);
+   timer->start(30000);
 }
 
 void MainWindow::stopIdleTimer(){
@@ -52,40 +60,6 @@ void MainWindow::returnToMenu(){
 void MainWindow::returnToLogin(){
    timer->stop();
    ui->stackedWidget->setCurrentIndex(0);
-}
-
-
-void MainWindow::on_pushButton_clicked()
-{
-   double saldo = objectRestapi->getBalance();
-
-  ui->lineEdit->setText(QString::number(saldo, 'f', 2));
-
-}
-
-
-void MainWindow::on_nostaButton_clicked()
-{
-    QString amount = ui->nostoLineEdit->text();
-    objectRestapi->withdrawMoney(amount);
-
-}
-
-void MainWindow::on_cardPushButton_clicked()
-{
-   objectRestapi->setAccount(ui->cardLineEdit->text());
-}
-
-void MainWindow::on_siirtoPushButton_clicked()
-{
-    QString vastaanottaja = ui->accLineEdit->text();
-    QString maara = ui->transferLineEdit->text();
-    objectRestapi->transferMoney(vastaanottaja, maara);
-}
-
-void MainWindow::on_startTestPushButton_clicked()
-{
-   ui->stackedWidget->setCurrentIndex(2);
 }
 
 void MainWindow::on_closePushButton_clicked()
@@ -144,4 +118,33 @@ void MainWindow::on_loginPushButton_clicked()
 {
    ui->stackedWidget->setCurrentIndex(1);
    objectRestapi->setAccount(ui->loginLineEdit->text());
+   objectRestapi->setCryptoAccount(ui->loginLineEdit->text());
+}
+
+void MainWindow::on_startSiirtoPushButton_clicked()
+{
+   ui->stackedWidget->setCurrentIndex(3);
+   startIdleTimer();
+}
+
+void MainWindow::on_transferButton_clicked()
+{
+   objectRestapi->transferMoney(ui->recipientLineEdit->text(), ui->transferAmountLineEdit->text());
+}
+
+void MainWindow::on_startTestPushButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(5);
+    startIdleTimer();
+}
+
+void MainWindow::on_buyCryptoPushButton_clicked()
+{
+   objectRestapi->buyCrypto(ui->buyCryptoLineEdit->text());
+
+}
+
+void MainWindow::on_sellCryptoPushButton_clicked()
+{
+   objectRestapi->sellCrypto(ui->sellCryptoLineEdit->text());
 }
