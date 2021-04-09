@@ -19,18 +19,24 @@ public:
     void setAccount(QString);
     void setCryptoAccount(QString);
     void transferMoney(QString, QString);
+    void buyCrypto(QString);
+    void sellCrypto(QString);
 
 private slots:
     void withdrawSlot(QNetworkReply *reply);
     void accSlot(QNetworkReply *reply);
+    void cryptoSlot(QNetworkReply *reply);
     void transferSlot(QNetworkReply *reply);
+    void convertCryptoSlot(QNetworkReply *reply);
 
 signals:
     void errorSignal(QString);
+    void successSignal(QString);
 
 private:
     QString credentials;
     QString account;
+    QString cryptoaccount;
     QString url;
     QNetworkAccessManager *balanceManager;
     QNetworkReply *balanceReply;
@@ -40,6 +46,12 @@ private:
 
     QNetworkAccessManager *accManager;
     QNetworkReply *accReply;
+
+    QNetworkAccessManager *cryptoManager;
+    QNetworkReply *cryptoReply;
+
+    QNetworkAccessManager *convertCryptoManager;
+    QNetworkReply *convertCryptoReply;
 
     QNetworkAccessManager *transferManager;
     QNetworkReply *transferReply;

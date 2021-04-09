@@ -27,17 +27,9 @@ public:
 private slots:
     void returnToMenu();
     void returnToLogin();
-    void on_pushButton_clicked();
-
-    void on_nostaButton_clicked();
-
-    void on_cardPushButton_clicked();
+    void successSlot(QString);
 
     void errorSlot(QString);
-
-    void on_siirtoPushButton_clicked();
-
-    void on_startTestPushButton_clicked();
 
     void on_closePushButton_clicked();
 
@@ -58,6 +50,16 @@ private slots:
     void on_startNostoPushButton_clicked();
 
     void on_loginPushButton_clicked();
+
+    void on_startSiirtoPushButton_clicked();
+
+    void on_transferButton_clicked();
+
+    void on_startTestPushButton_clicked();
+
+    void on_buyCryptoPushButton_clicked();
+
+    void on_sellCryptoPushButton_clicked();
 
 private:
     Ui::MainWindow *ui;

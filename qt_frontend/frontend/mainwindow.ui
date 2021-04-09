@@ -24,10 +24,10 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="loginpage">
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>270</x>
@@ -73,20 +73,33 @@
        </rect>
       </property>
       <property name="text">
-       <string>Aloita!</string>
+       <string>Krypto</string>
       </property>
      </widget>
      <widget class="QPushButton" name="startNostoPushButton">
       <property name="geometry">
        <rect>
-        <x>410</x>
-        <y>410</y>
+        <x>420</x>
+        <y>310</y>
         <width>151</width>
         <height>71</height>
        </rect>
       </property>
       <property name="text">
        <string>Nosto</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="startSiirtoPushButton">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>400</y>
+        <width>151</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Siirto</string>
       </property>
      </widget>
     </widget>
@@ -196,111 +209,158 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="testpage">
-     <widget class="QWidget" name="layoutWidget">
+    <widget class="QWidget" name="siirtopage">
+     <widget class="QLineEdit" name="recipientLineEdit">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>140</y>
+        <width>113</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="recipientLabel">
       <property name="geometry">
        <rect>
         <x>220</x>
         <y>120</y>
-        <width>298</width>
-        <height>290</height>
+        <width>111</width>
+        <height>17</height>
        </rect>
       </property>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="1" column="0">
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <item>
-          <widget class="QLineEdit" name="lineEdit"/>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton">
-           <property name="text">
-            <string>Hae saldo</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="1">
-        <layout class="QVBoxLayout" name="verticalLayout_4">
-         <item>
-          <widget class="QLineEdit" name="nostoLineEdit"/>
-         </item>
-         <item>
-          <widget class="QPushButton" name="nostaButton">
-           <property name="text">
-            <string>Nosta</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="0" column="1">
-        <layout class="QVBoxLayout" name="verticalLayout_6">
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
-           <item>
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string>Vastaanottajan tili</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="accLineEdit"/>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_5">
-           <item>
-            <widget class="QLabel" name="amountLabel">
-             <property name="text">
-              <string>Määrä</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="transferLineEdit"/>
-           </item>
-           <item>
-            <widget class="QPushButton" name="siirtoPushButton">
-             <property name="text">
-              <string>Siirto</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-       <item row="0" column="0">
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="QLineEdit" name="cardLineEdit"/>
-         </item>
-         <item>
-          <widget class="QPushButton" name="cardPushButton">
-           <property name="text">
-            <string>Aseta kortti</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
+      <property name="text">
+       <string>Vastaanottaja</string>
+      </property>
      </widget>
-     <widget class="QPushButton" name="closePushButton">
+     <widget class="QLineEdit" name="transferAmountLineEdit">
       <property name="geometry">
        <rect>
-        <x>240</x>
-        <y>450</y>
-        <width>241</width>
+        <x>220</x>
+        <y>240</y>
+        <width>113</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="transferLabel">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>220</y>
+        <width>62</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Määrä</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="transferButton">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>350</y>
+        <width>201</width>
         <height>81</height>
        </rect>
       </property>
       <property name="text">
-       <string>SULJE</string>
+       <string>Siirrä</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="successpage">
+     <widget class="QLabel" name="successlabel">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>110</y>
+        <width>301</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>22</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Onnistui</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="cryptopage">
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>110</y>
+        <width>62</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Osta</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="buyCryptoLineEdit">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>130</y>
+        <width>113</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="buyCryptoPushButton">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>170</y>
+        <width>83</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Osta</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>110</y>
+        <width>62</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Myy</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="sellCryptoLineEdit">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>130</y>
+        <width>113</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="sellCryptoPushButton">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>170</y>
+        <width>83</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Myy</string>
       </property>
      </widget>
     </widget>
