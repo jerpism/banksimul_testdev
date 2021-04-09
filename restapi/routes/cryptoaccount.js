@@ -18,4 +18,15 @@ router.get('/getBalance/:id',
     });
 });
 
+router.post('/buy_crypto',
+    function(request, response){
+        cryptoaccount.buyCrypto(request.body, function(err, dbResult){
+            if(err){
+                response.json(err.errno);
+            }else{
+                response.json(dbResult.affectedRows);
+            }
+        });
+    });
+
 module.exports = router;
