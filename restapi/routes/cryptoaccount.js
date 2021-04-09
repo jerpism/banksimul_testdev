@@ -29,4 +29,15 @@ router.post('/buy_crypto',
         });
     });
 
+router.post('/sell_crypto',
+    function(request, response){
+        cryptoaccount.sellCrypto(request.body, function(err, dbResult){
+            if(err){
+                response.json(err.errno);
+            }else{
+                response.json(dbResult.affectedRows);
+            }
+        });
+    });
+
 module.exports = router;

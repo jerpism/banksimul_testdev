@@ -11,6 +11,13 @@ const cryptoaccount = {
             'CALL buy_crypto(?,?,?)',
             [procedure_params.id_acc,procedure_params.id_crypto,procedure_params.amount],callback
         );
+    },
+
+    sellCrypto: function(procedure_params, callback){
+        return db.query(
+            'CALL sell_crypto(?,?,?)',
+            [procedure_params.id_acc,procedure_params.id_crypto,procedure_params.amount],callback
+        );
     }
 };
 
