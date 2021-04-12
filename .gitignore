@@ -1,5 +1,6 @@
 node_modules/
 /build*
+certs/
 qt_frontend/build*
 qt_frontend/frontend/frontend.pro.user
 *.gch
