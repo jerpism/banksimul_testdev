@@ -1,8 +1,16 @@
+var fs = require('fs');
 var express = require('express');
+var https = require('https');
+var http = require('http');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const basicAuth = require('express-basic-auth');
+
+const pKey = fs.readFileSync('./certs/ca.key');
+const cert = fs.readFileSync('./certs/ca.crt');
+
+const cred ={key: pKey, cert: cert};
 
 const accountRouter = require('./routes/account');
 const cardRouter = require('./routes/card');
@@ -24,5 +32,9 @@ app.use('/card', cardRouter);
 app.use('/actions', actionsRouter);
 app.use('/cryptoaccount', cryptoaccountRouter);
 
-module.exports = app;
 
+const httpsServer = https.createServer(cred, app);
+
+httpsServer.listen(3000);
+
+module.exports = app;
