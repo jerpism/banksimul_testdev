@@ -1,6 +1,8 @@
 QT -= gui
 QT += network
 
+PKGCONFIG += openssl
+
 TEMPLATE = lib
 DEFINES += RESTAPI_LIBRARY
 

@@ -38,6 +38,7 @@ private:
     QString account;
     QString cryptoaccount;
     QString url;
+    QSslConfiguration config;
     QNetworkAccessManager *balanceManager;
     QNetworkReply *balanceReply;
 

@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     credentials="admin:1234";
-    url = "http://91.145.117.152:3000";
+    url = "https://91.145.117.152:3000";
     objectRestapi = new Restapi;
     timer = new QTimer(this);
     connect(objectRestapi, SIGNAL(errorSignal(QString)), this, SLOT(errorSlot(QString)));

@@ -4,10 +4,13 @@ Restapi::Restapi()
 {
     credentials="admin:1234";
     url = "http://91.145.117.152:3000";
+   config = QSslConfiguration::defaultConfiguration();
+   config.setPeerVerifyMode(QSslSocket::VerifyNone);
 }
 
 void Restapi::setAccount(QString card){
    QNetworkRequest request(url+"/card/getAccount/"+card);
+   request.setSslConfiguration(config);
    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
    QByteArray data = credentials.toLocal8Bit().toBase64();
    QString headerData = "Basic " + data;
@@ -20,6 +23,9 @@ void Restapi::setAccount(QString card){
 
 void Restapi::setCryptoAccount(QString card){
    QNetworkRequest request(url+"/card/getCryptoAccount/"+card);
+   QSslConfiguration config = QSslConfiguration::defaultConfiguration();
+   config.setPeerVerifyMode(QSslSocket::VerifyNone);
+   request.setSslConfiguration(config);
    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
    QByteArray data = credentials.toLocal8Bit().toBase64();
    QString headerData = "Basic " + data;
@@ -45,6 +51,9 @@ void Restapi::transferMoney(QString recipient, QString amount){
     }else{
 
     QNetworkRequest request(url+"/account/transfer_action");
+    QSslConfiguration config = QSslConfiguration::defaultConfiguration();
+    config.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(config);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QByteArray data = credentials.toLocal8Bit().toBase64();
     QString headerData = "Basic " + data;
@@ -65,6 +74,9 @@ void Restapi::buyCrypto(QString amount){
     json_obj.insert("amount", amount);
 
     QNetworkRequest request(url+"/cryptoAccount/buy_crypto");
+    QSslConfiguration config = QSslConfiguration::defaultConfiguration();
+    config.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(config);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QByteArray data = credentials.toLocal8Bit().toBase64();
     QString headerData = "Basic " + data;
@@ -99,6 +111,9 @@ void Restapi::sellCrypto(QString amount){
 double Restapi::getBalance(){
     QNetworkRequest request(url+"/account/getBalance/"+account);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QSslConfiguration config = QSslConfiguration::defaultConfiguration();
+    config.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(config);
     QByteArray data = credentials.toLocal8Bit().toBase64();
     QString headerData = "Basic " + data;
 
@@ -133,6 +148,9 @@ void Restapi::withdrawMoney(QString amount){
 
     QNetworkRequest request(url+"/account/withdraw_action");
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QSslConfiguration config = QSslConfiguration::defaultConfiguration();
+    config.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(config);
     QByteArray data = credentials.toLocal8Bit().toBase64();
     QString headerData = "Basic " + data;
 
@@ -187,6 +205,7 @@ void Restapi::convertCryptoSlot(QNetworkReply* reply){
 
 void Restapi::accSlot(QNetworkReply* reply){
     QByteArray response_data=reply->readAll();
+    qDebug() << reply->error();
     qDebug() << response_data;
     if(response_data == "\"Account not found\""){
         qDebug() << "Tiliä ei löytynyt";
