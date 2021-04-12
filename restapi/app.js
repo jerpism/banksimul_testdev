@@ -7,10 +7,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const basicAuth = require('express-basic-auth');
 
-const pKey = fs.readFileSync('./certs/ca.key');
-const cert = fs.readFileSync('./certs/ca.crt');
+//const pKey = fs.readFileSync('./certs/ca.key');
+//const cert = fs.readFileSync('./certs/ca.crt');
 
-const cred ={key: pKey, cert: cert};
+//const cred ={key: pKey, cert: cert};
 
 const accountRouter = require('./routes/account');
 const cardRouter = require('./routes/card');
@@ -33,8 +33,11 @@ app.use('/actions', actionsRouter);
 app.use('/cryptoaccount', cryptoaccountRouter);
 
 
-const httpsServer = https.createServer(cred, app);
+//const httpsServer = https.createServer(cred, app);
+const httpServer = http.createServer(app);
+httpServer.listen(3000);
 
-httpsServer.listen(3000);
+//httpServer.listen(3000);
+
 
 module.exports = app;
