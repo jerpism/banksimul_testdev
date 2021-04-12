@@ -32,9 +32,12 @@ void MainWindow::successSlot(QString response){
 
 void MainWindow::errorSlot(QString virhe){
     qDebug() << "Virhe otettu vastaan: " + virhe;
+   // int prevPage = ui->stackedWidget->currentIndex();
+    ui->stackedWidget->setCurrentIndex(8);
     ui->virheLabel->setText(virhe);
+//    QTimer::singleShot(5000, this, [&]() { ui->stackedWidget->setCurrentIndex(prevPage);});
 
-    QTimer::singleShot(10000, this, [&]() { ui->virheLabel->setText("");});
+   QTimer::singleShot(5000, this, SLOT(returnToMenu()));
 }
 
 void MainWindow::startIdleTimer(){
@@ -70,35 +73,37 @@ void MainWindow::on_closePushButton_clicked()
 void MainWindow::on_nosta20Button_clicked()
 {
     objectRestapi->withdrawMoney("20");
-    startIdleTimer();
+    stopIdleTimer();
 }
 
 void MainWindow::on_nosta40Button_clicked()
 {
     objectRestapi->withdrawMoney("40");
-
+    stopIdleTimer();
 }
 
 void MainWindow::on_nosta60Button_clicked()
 {
     objectRestapi->withdrawMoney("60");
-
+    stopIdleTimer();
 }
 
 void MainWindow::on_nosta100Button_clicked()
 {
     objectRestapi->withdrawMoney("100");
+    stopIdleTimer();
 }
 
 void MainWindow::on_nosta200Button_clicked()
 {
     objectRestapi->withdrawMoney("200");
-
+    stopIdleTimer();
 }
 
 void MainWindow::on_nosta500Button_clicked()
 {
     objectRestapi->withdrawMoney("500");
+    stopIdleTimer();
 }
 
 void MainWindow::on_closeNostoPushButton_clicked()
@@ -130,6 +135,7 @@ void MainWindow::on_startSiirtoPushButton_clicked()
 void MainWindow::on_transferButton_clicked()
 {
    objectRestapi->transferMoney(ui->recipientLineEdit->text(), ui->transferAmountLineEdit->text());
+   stopIdleTimer();
 }
 
 void MainWindow::on_startTestPushButton_clicked()
@@ -141,10 +147,28 @@ void MainWindow::on_startTestPushButton_clicked()
 void MainWindow::on_buyCryptoPushButton_clicked()
 {
    objectRestapi->buyCrypto(ui->buyCryptoLineEdit->text());
-
+   stopIdleTimer();
 }
 
 void MainWindow::on_sellCryptoPushButton_clicked()
 {
    objectRestapi->sellCrypto(ui->sellCryptoLineEdit->text());
+   stopIdleTimer();
+}
+
+void MainWindow::on_exitCryptoPushButton_clicked()
+{
+   returnToMenu();
+}
+
+void MainWindow::on_buySelectPushButton_clicked()
+{
+  ui->stackedWidget->setCurrentIndex(6);
+  startIdleTimer();
+}
+
+void MainWindow::on_sellSelectPushButton_clicked()
+{
+   ui->stackedWidget->setCurrentIndex(7);
+   startIdleTimer();
 }

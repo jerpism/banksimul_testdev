@@ -61,6 +61,12 @@ private slots:
 
     void on_sellCryptoPushButton_clicked();
 
+    void on_exitCryptoPushButton_clicked();
+
+    void on_buySelectPushButton_clicked();
+
+    void on_sellSelectPushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString credentials;

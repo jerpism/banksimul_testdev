@@ -16,11 +16,11 @@ sell_crypto:BEGIN
  --   SELECT account.id_account INTO @accid FROM card JOIN account ON card.id_account = account.id_account WHERE id_card = cardid;
 
 	START transaction;
-    UPDATE account SET balance = balance+amount/0.005 WHERE id_account = id_acc AND balance-amount > 0;
+    UPDATE cryptoaccount SET balance = balance-amount WHERE id_cryptoaccount = id_crypto AND balance-amount > 0;
     SET @test=row_count();
     
     IF(@test > 0) THEN
-		UPDATE cryptoaccount SET balance = balance-amount WHERE id_cryptoaccount = id_crypto;
+		UPDATE account SET balance = balance+amount/0.005 WHERE id_account = id_acc;
         
         SET @test=row_count();
         
