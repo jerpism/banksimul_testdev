@@ -174,6 +174,12 @@ void Restapi::transferSlot(QNetworkReply* reply){
 void Restapi::convertCryptoSlot(QNetworkReply* reply){
    QByteArray response_data = reply->readAll();
    qDebug() << "Krypton oston data: " + response_data;
+   if(response_data == "4"){
+       emit successSignal("Krypton vaihto onnistui");
+   }else{
+       emit errorSignal("Krypton vaihdossa oli virhe");
+   }
+
    convertCryptoManager->deleteLater();
    convertCryptoReply->deleteLater();
    reply->deleteLater();
