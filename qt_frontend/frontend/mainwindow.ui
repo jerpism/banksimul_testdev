@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>8</number>
+     <number>6</number>
     </property>
     <widget class="QWidget" name="loginpage">
      <widget class="QWidget" name="layoutWidget">
@@ -319,7 +319,7 @@
      </widget>
     </widget>
     <widget class="QWidget" name="buycryptopage">
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>260</x>
@@ -348,9 +348,22 @@
        </item>
       </layout>
      </widget>
+     <widget class="QLabel" name="balancelabel">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>80</y>
+        <width>411</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Balancelabel</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="sellcryptopage">
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>280</x>
@@ -378,6 +391,19 @@
         </widget>
        </item>
       </layout>
+     </widget>
+     <widget class="QLabel" name="cryptobalancelabel">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>20</y>
+        <width>411</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Tililläsi on</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="errorpage">

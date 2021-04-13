@@ -133,6 +133,30 @@ double Restapi::getBalance(){
     return response.toDouble();
 }
 
+double Restapi::getCryptoBalance(){
+    QNetworkRequest request(url+"/cryptoaccount/getBalance/"+cryptoaccount);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QSslConfiguration config = QSslConfiguration::defaultConfiguration();
+    config.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(config);
+    QByteArray data = credentials.toLocal8Bit().toBase64();
+    QString headerData = "Basic " + data;
+
+    request.setRawHeader("Authorization", headerData.toLocal8Bit());
+    cryptoBalanceManager = new QNetworkAccessManager;
+    QEventLoop loop;
+    cryptoBalanceReply = cryptoBalanceManager->get(request);
+    connect(cryptoBalanceReply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+
+    QString response = cryptoBalanceReply->readAll();
+    qDebug() << "balance vastaus: "+response;
+
+    cryptoBalanceReply->deleteLater();
+    cryptoBalanceManager->deleteLater();
+
+    return response.toDouble();
+}
 
 void Restapi::withdrawMoney(QString amount){
     QJsonObject json_obj;
@@ -192,7 +216,7 @@ void Restapi::transferSlot(QNetworkReply* reply){
 void Restapi::convertCryptoSlot(QNetworkReply* reply){
    QByteArray response_data = reply->readAll();
    qDebug() << "Krypton oston data: " + response_data;
-   if(response_data == "4"){
+   if(response_data != "1"){
        emit successSignal("Krypton vaihto onnistui");
    }else{
        emit errorSignal("Krypton vaihdossa oli virhe");
