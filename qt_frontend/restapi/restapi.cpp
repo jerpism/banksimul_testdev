@@ -4,8 +4,8 @@ Restapi::Restapi()
 {
     credentials="admin:1234";
     url = "http://91.145.117.152:3000";
-   config = QSslConfiguration::defaultConfiguration();
-   config.setPeerVerifyMode(QSslSocket::VerifyNone);
+    config = QSslConfiguration::defaultConfiguration();
+    config.setPeerVerifyMode(QSslSocket::VerifyNone);
 }
 
 void Restapi::setAccount(QString card){
