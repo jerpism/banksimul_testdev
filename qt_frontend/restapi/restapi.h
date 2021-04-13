@@ -15,12 +15,14 @@ class RESTAPI_EXPORT Restapi : public QObject
 public:
     Restapi();
     double getBalance();
+    double getCryptoBalance();
     void withdrawMoney(QString);
     void setAccount(QString);
     void setCryptoAccount(QString);
     void transferMoney(QString, QString);
     void buyCrypto(QString);
     void sellCrypto(QString);
+
 
 private slots:
     void withdrawSlot(QNetworkReply *reply);
@@ -39,8 +41,12 @@ private:
     QString cryptoaccount;
     QString url;
     QSslConfiguration config;
+
     QNetworkAccessManager *balanceManager;
     QNetworkReply *balanceReply;
+
+    QNetworkAccessManager *cryptoBalanceManager;
+    QNetworkReply *cryptoBalanceReply;
 
     QNetworkAccessManager *withdrawManager;
     QNetworkReply *withdrawReply;

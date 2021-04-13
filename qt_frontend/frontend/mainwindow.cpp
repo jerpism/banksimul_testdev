@@ -164,11 +164,13 @@ void MainWindow::on_exitCryptoPushButton_clicked()
 void MainWindow::on_buySelectPushButton_clicked()
 {
   ui->stackedWidget->setCurrentIndex(6);
+  ui->balancelabel->setText("Tililläsi on: "+QString::number(objectRestapi->getBalance(), 'f', 2));
   startIdleTimer();
 }
 
 void MainWindow::on_sellSelectPushButton_clicked()
 {
    ui->stackedWidget->setCurrentIndex(7);
+   ui->cryptobalancelabel->setText("Tililläsi on: "+QString::number(objectRestapi->getCryptoBalance(), 'f', 10));
    startIdleTimer();
 }
