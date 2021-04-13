@@ -17,6 +17,7 @@ const cardRouter = require('./routes/card');
 const loginRouter = require('./routes/login');
 const actionsRouter = require('./routes/actions');
 const cryptoaccountRouter = require('./routes/cryptoaccount');
+const ratesRouter = require('./routes/rates');
 
 var app = express();
 app.use(logger('dev'));
@@ -31,6 +32,7 @@ app.use('/account', accountRouter);
 app.use('/card', cardRouter);
 app.use('/actions', actionsRouter);
 app.use('/cryptoaccount', cryptoaccountRouter);
+app.use('/rates', ratesRouter);
 
 
 //const httpsServer = https.createServer(cred, app);
