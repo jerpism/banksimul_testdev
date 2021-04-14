@@ -174,3 +174,9 @@ void MainWindow::on_sellSelectPushButton_clicked()
    ui->cryptobalancelabel->setText("Tililläsi on: "+QString::number(objectRestapi->getCryptoBalance(), 'f', 10));
    startIdleTimer();
 }
+
+void MainWindow::on_input1_clicked()
+{
+   ui->transferAmountLineEdit->setText(ui->transferAmountLineEdit->text()+"1");
+   startIdleTimer();
+}
