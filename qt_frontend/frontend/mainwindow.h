@@ -67,6 +67,8 @@ private slots:
 
     void on_sellSelectPushButton_clicked();
 
+    void on_input1_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString credentials;

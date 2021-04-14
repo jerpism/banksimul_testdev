@@ -23,7 +23,6 @@ void Restapi::setAccount(QString card){
 
 void Restapi::setCryptoAccount(QString card){
    QNetworkRequest request(url+"/card/getCryptoAccount/"+card);
-   QSslConfiguration config = QSslConfiguration::defaultConfiguration();
    config.setPeerVerifyMode(QSslSocket::VerifyNone);
    request.setSslConfiguration(config);
    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -73,6 +72,10 @@ void Restapi::buyCrypto(QString amount){
     json_obj.insert("id_crypto", cryptoaccount);
     json_obj.insert("amount", amount);
 
+    if(amount.toDouble() < 0){
+        emit errorSignal("Et voi ostaa negatiivisia summia");
+    }else{
+
     QNetworkRequest request(url+"/cryptoAccount/buy_crypto");
     QSslConfiguration config = QSslConfiguration::defaultConfiguration();
     config.setPeerVerifyMode(QSslSocket::VerifyNone);
@@ -86,6 +89,7 @@ void Restapi::buyCrypto(QString amount){
     convertCryptoManager = new QNetworkAccessManager;
     connect(convertCryptoManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(convertCryptoSlot(QNetworkReply*)));
     convertCryptoReply=convertCryptoManager->post(request, QJsonDocument(json_obj).toJson());
+    }
 
 }
 
@@ -94,6 +98,10 @@ void Restapi::sellCrypto(QString amount){
     json_obj.insert("id_acc", account);
     json_obj.insert("id_crypto", cryptoaccount);
     json_obj.insert("amount", amount);
+
+    if(amount.toDouble() < 0){
+        emit errorSignal("Et voi myydä negatiivisia määriä");
+    }else{
 
     QNetworkRequest request(url+"/cryptoAccount/sell_crypto");
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -105,6 +113,7 @@ void Restapi::sellCrypto(QString amount){
     convertCryptoManager = new QNetworkAccessManager;
     connect(convertCryptoManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(convertCryptoSlot(QNetworkReply*)));
     convertCryptoReply=convertCryptoManager->post(request, QJsonDocument(json_obj).toJson());
+    }
 
 }
 

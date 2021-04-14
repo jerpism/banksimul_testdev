@@ -17,14 +17,14 @@
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>30</y>
-      <width>801</width>
-      <height>541</height>
+      <x>60</x>
+      <y>10</y>
+      <width>771</width>
+      <height>551</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>6</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="loginpage">
      <widget class="QWidget" name="layoutWidget">
@@ -66,8 +66,8 @@
      <widget class="QPushButton" name="startTestPushButton">
       <property name="geometry">
        <rect>
-        <x>190</x>
-        <y>410</y>
+        <x>310</x>
+        <y>340</y>
         <width>141</width>
         <height>71</height>
        </rect>
@@ -102,13 +102,26 @@
        <string>Siirto</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="input1">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>41</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>1</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="nostopage">
      <widget class="QPushButton" name="nosta20Button">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>30</y>
+        <x>40</x>
+        <y>20</y>
         <width>181</width>
         <height>121</height>
        </rect>
@@ -146,8 +159,8 @@
      <widget class="QPushButton" name="nosta200Button">
       <property name="geometry">
        <rect>
-        <x>580</x>
-        <y>180</y>
+        <x>560</x>
+        <y>160</y>
         <width>181</width>
         <height>121</height>
        </rect>
@@ -159,8 +172,8 @@
      <widget class="QPushButton" name="nosta100Button">
       <property name="geometry">
        <rect>
-        <x>580</x>
-        <y>30</y>
+        <x>570</x>
+        <y>20</y>
         <width>181</width>
         <height>121</height>
        </rect>
