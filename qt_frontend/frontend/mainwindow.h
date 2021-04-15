@@ -28,6 +28,7 @@ private slots:
     void returnToMenu();
     void returnToLogin();
     void successSlot(QString);
+    void loginSlot(bool);
 
     void errorSlot(QString);
 
@@ -68,6 +69,8 @@ private slots:
     void on_sellSelectPushButton_clicked();
 
     void on_input1_clicked();
+
+    void on_logoutPushButton_clicked();
 
 private:
     Ui::MainWindow *ui;

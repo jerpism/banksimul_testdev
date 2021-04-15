@@ -16,6 +16,8 @@ public:
     Restapi();
     double getBalance();
     double getCryptoBalance();
+    void login(QString, QString);
+    void logout();
     void withdrawMoney(QString);
     void setAccount(QString);
     void setCryptoAccount(QString);
@@ -30,10 +32,12 @@ private slots:
     void cryptoSlot(QNetworkReply *reply);
     void transferSlot(QNetworkReply *reply);
     void convertCryptoSlot(QNetworkReply *reply);
+    void loginSlot(QNetworkReply *reply);
 
 signals:
     void errorSignal(QString);
     void successSignal(QString);
+    void loginSignal(bool);
 
 private:
     QString credentials;
@@ -62,6 +66,9 @@ private:
 
     QNetworkAccessManager *transferManager;
     QNetworkReply *transferReply;
+
+    QNetworkAccessManager *loginManager;
+    QNetworkReply *loginReply;
 };
 
 #endif // RESTAPI_H

@@ -8,6 +8,27 @@ Restapi::Restapi()
     config.setPeerVerifyMode(QSslSocket::VerifyNone);
 }
 
+void Restapi::login(QString card, QString pin){
+    QJsonObject json_obj;
+    json_obj.insert("id", card);
+    json_obj.insert("pin", pin);
+
+    QNetworkRequest request(url+"/login");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QByteArray data = credentials.toLocal8Bit().toBase64();
+    QString headerData = "Basic " + data;
+
+    request.setRawHeader("Authorization", headerData.toLocal8Bit());
+
+   loginManager = new QNetworkAccessManager;
+   connect(loginManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(loginSlot(QNetworkReply*)));
+   loginReply = loginManager->post(request, QJsonDocument(json_obj).toJson());
+}
+void Restapi::logout(){
+   account = "";
+   cryptoaccount = "";
+}
+
 void Restapi::setAccount(QString card){
    QNetworkRequest request(url+"/card/getAccount/"+card);
    request.setSslConfiguration(config);
@@ -196,11 +217,28 @@ void Restapi::withdrawMoney(QString amount){
     }
 }
 
+void Restapi::loginSlot(QNetworkReply* reply){
+    QByteArray response_data = reply->readAll();
+    qDebug() << "login vastaus: " + response_data;
+
+    if(response_data == "true"){
+        emit loginSignal(true);
+    }else{
+        emit loginSignal(false);
+    }
+
+}
 
 void Restapi::withdrawSlot(QNetworkReply* reply)
 {
     QByteArray response_data=reply->readAll();
     qDebug() << "vastaus: " +response_data;
+
+    if(response_data.toInt() < 3){
+       emit errorSignal("Nosto epäonnistui");
+    }else{
+       emit successSignal("Nosto onnistui");
+    }
     withdrawManager->deleteLater();
     withdrawReply->deleteLater();
     reply->deleteLater();
@@ -242,7 +280,7 @@ void Restapi::accSlot(QNetworkReply* reply){
     qDebug() << response_data;
     if(response_data == "\"Account not found\""){
         qDebug() << "Tiliä ei löytynyt";
-        emit errorSignal("Tili hukassa");
+        emit errorSignal("Tiliä ei ole");
         account = "404";
     }else{
         account = response_data;
@@ -260,7 +298,6 @@ void Restapi::cryptoSlot(QNetworkReply* reply){
 
     if(response_data == "\"Account not found\""){
         qDebug() << "Kryptotiliä ei löytynyt";
-        emit errorSignal("Tili hukassa");
         cryptoaccount = "404";
     }else{
         cryptoaccount = response_data;
