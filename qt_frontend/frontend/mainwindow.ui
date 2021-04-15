@@ -33,7 +33,7 @@
         <x>270</x>
         <y>240</y>
         <width>197</width>
-        <height>102</height>
+        <height>133</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -53,6 +53,9 @@
         <widget class="QLineEdit" name="loginLineEdit"/>
        </item>
        <item>
+        <widget class="QLineEdit" name="loginPinLineEdit"/>
+       </item>
+       <item>
         <widget class="QPushButton" name="loginPushButton">
          <property name="text">
           <string>KIRJAUDU</string>
@@ -61,13 +64,26 @@
        </item>
       </layout>
      </widget>
+     <widget class="QLabel" name="loginErrorLabel">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>140</y>
+        <width>301</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>loginErrorLabel</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="menupage">
      <widget class="QPushButton" name="startTestPushButton">
       <property name="geometry">
        <rect>
-        <x>310</x>
-        <y>340</y>
+        <x>250</x>
+        <y>310</y>
         <width>141</width>
         <height>71</height>
        </rect>
@@ -113,6 +129,19 @@
       </property>
       <property name="text">
        <string>1</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="logoutPushButton">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>500</y>
+        <width>101</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Kirjaudu ulos</string>
       </property>
      </widget>
     </widget>

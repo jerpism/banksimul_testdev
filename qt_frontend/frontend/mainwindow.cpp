@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     timer = new QTimer(this);
     connect(objectRestapi, SIGNAL(errorSignal(QString)), this, SLOT(errorSlot(QString)));
     connect(objectRestapi, SIGNAL(successSignal(QString)), this, SLOT(successSlot(QString)));
+    connect(objectRestapi, SIGNAL(loginSignal(bool)), this, SLOT(loginSlot(bool)));
     ui->stackedWidget->setCurrentIndex(0);
 }
 
@@ -21,6 +22,17 @@ MainWindow::~MainWindow()
     delete objectRestapi;
     ui = nullptr;
     objectRestapi = nullptr;
+}
+
+void MainWindow::loginSlot(bool response){
+   if(response ==true){
+       ui->stackedWidget->setCurrentIndex(1);
+       objectRestapi->setAccount(ui->loginLineEdit->text());
+       objectRestapi->setCryptoAccount(ui->loginLineEdit->text());
+   }else{
+       qDebug() << "pröööh :D";
+       ui->loginErrorLabel->setText("Prööh");
+   }
 }
 
 void MainWindow::successSlot(QString response){
@@ -35,9 +47,13 @@ void MainWindow::errorSlot(QString virhe){
    // int prevPage = ui->stackedWidget->currentIndex();
     ui->stackedWidget->setCurrentIndex(8);
     ui->virheLabel->setText(virhe);
-//    QTimer::singleShot(5000, this, [&]() { ui->stackedWidget->setCurrentIndex(prevPage);});
 
+    if(virhe == "Tiliä ei ole")
+        returnToLogin();
+    else{
+//    QTimer::singleShot(5000, this, [&]() { ui->stackedWidget->setCurrentIndex(prevPage);});
    QTimer::singleShot(5000, this, SLOT(returnToMenu()));
+    }
 }
 
 void MainWindow::startIdleTimer(){
@@ -62,6 +78,8 @@ void MainWindow::returnToMenu(){
 
 void MainWindow::returnToLogin(){
    timer->stop();
+   ui->loginLineEdit->setText("");
+   ui->loginPinLineEdit->setText("");
    ui->stackedWidget->setCurrentIndex(0);
 }
 
@@ -121,9 +139,11 @@ void MainWindow::on_startNostoPushButton_clicked()
 
 void MainWindow::on_loginPushButton_clicked()
 {
-   ui->stackedWidget->setCurrentIndex(1);
-   objectRestapi->setAccount(ui->loginLineEdit->text());
-   objectRestapi->setCryptoAccount(ui->loginLineEdit->text());
+   //ui->stackedWidget->setCurrentIndex(1);
+   //objectRestapi->setAccount(ui->loginLineEdit->text());
+   //objectRestapi->setCryptoAccount(ui->loginLineEdit->text());
+   objectRestapi->login(ui->loginLineEdit->text(), ui->loginPinLineEdit->text());
+   startMenuIdleTimer();
 }
 
 void MainWindow::on_startSiirtoPushButton_clicked()
@@ -179,4 +199,11 @@ void MainWindow::on_input1_clicked()
 {
    ui->transferAmountLineEdit->setText(ui->transferAmountLineEdit->text()+"1");
    startIdleTimer();
+}
+
+void MainWindow::on_logoutPushButton_clicked()
+{
+   objectRestapi->logout();
+   returnToLogin();
+
 }
