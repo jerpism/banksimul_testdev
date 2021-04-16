@@ -16,6 +16,7 @@ public:
     Restapi();
     double getBalance();
     double getCryptoBalance();
+    double getRate();
     void login(QString, QString);
     void logout();
     void withdrawMoney(QString);
@@ -69,6 +70,8 @@ private:
 
     QNetworkAccessManager *loginManager;
     QNetworkReply *loginReply;
-};
 
+    QNetworkAccessManager *ratesManager;
+    QNetworkReply *ratesReply;
+};
 #endif // RESTAPI_H

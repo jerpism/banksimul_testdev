@@ -8,6 +8,7 @@
 #include <QJsonDocument>
 #include <QDebug>
 #include <QTimer>
+#include <QLineEdit>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,6 +24,7 @@ public:
     void startIdleTimer();
     void stopIdleTimer();
     void startMenuIdleTimer();
+    void handleClick();
 
 private slots:
     void returnToMenu();
@@ -72,6 +74,14 @@ private slots:
 
     void on_logoutPushButton_clicked();
 
+    void on_kp_1_clicked();
+
+    void on_kp_2_clicked();
+
+    void on_kp_3_clicked();
+
+    void on_kp_bk_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString credentials;
@@ -79,5 +89,6 @@ private:
     QString url;
     Restapi *objectRestapi;
     QTimer *timer;
+    QList<QLineEdit *> lineEdits;
 };
 #endif // MAINWINDOW_H
