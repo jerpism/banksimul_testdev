@@ -19,12 +19,12 @@
      <rect>
       <x>60</x>
       <y>10</y>
-      <width>771</width>
-      <height>551</height>
+      <width>731</width>
+      <height>481</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="loginpage">
      <widget class="QWidget" name="layoutWidget">
@@ -67,8 +67,8 @@
      <widget class="QLabel" name="loginErrorLabel">
       <property name="geometry">
        <rect>
-        <x>240</x>
-        <y>140</y>
+        <x>270</x>
+        <y>180</y>
         <width>301</width>
         <height>51</height>
        </rect>
@@ -222,19 +222,6 @@
       </property>
       <property name="text">
        <string>500€</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="closeNostoPushButton">
-      <property name="geometry">
-       <rect>
-        <x>290</x>
-        <y>470</y>
-        <width>191</width>
-        <height>71</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Palaa</string>
       </property>
      </widget>
     </widget>
@@ -466,6 +453,78 @@
       <property name="text">
        <string>VIRHE</string>
       </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="closeNostoPushButton">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>540</y>
+      <width>191</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Palaa</string>
+    </property>
+   </widget>
+   <widget class="QStackedWidget" name="stackedWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>410</y>
+      <width>281</width>
+      <height>271</height>
+     </rect>
+    </property>
+    <widget class="QWidget" name="tyhjapage"/>
+    <widget class="QWidget" name="napitpage">
+     <widget class="QPushButton" name="kp_bk">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>60</y>
+        <width>51</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;-</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>10</y>
+        <width>131</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="kp_1">
+         <property name="text">
+          <string>1</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="kp_2">
+         <property name="text">
+          <string>2</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="kp_3">
+         <property name="text">
+          <string>3</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </widget>

@@ -163,6 +163,31 @@ double Restapi::getBalance(){
     return response.toDouble();
 }
 
+double Restapi::getRate(){
+    QNetworkRequest request(url+"/rates/getRate/");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QSslConfiguration config = QSslConfiguration::defaultConfiguration();
+    config.setPeerVerifyMode(QSslSocket::VerifyNone);
+    request.setSslConfiguration(config);
+    QByteArray data = credentials.toLocal8Bit().toBase64();
+    QString headerData = "Basic " + data;
+
+    request.setRawHeader("Authorization", headerData.toLocal8Bit());
+    ratesManager = new QNetworkAccessManager;
+    QEventLoop loop;
+    ratesReply = ratesManager->get(request);
+    connect(ratesReply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+
+    QString response = ratesReply->readAll();
+    qDebug() << "rates vastaus: "+response;
+
+    ratesReply->deleteLater();
+    ratesManager->deleteLater();
+
+    return response.toDouble();
+}
+
 double Restapi::getCryptoBalance(){
     QNetworkRequest request(url+"/cryptoaccount/getBalance/"+cryptoaccount);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");

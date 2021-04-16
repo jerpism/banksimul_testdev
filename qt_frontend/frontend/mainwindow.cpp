@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    lineEdits.append(ui->loginPinLineEdit);
+    lineEdits.append(ui->buyCryptoLineEdit);
     credentials="admin:1234";
     url = "https://91.145.117.152:3000";
     objectRestapi = new Restapi;
@@ -14,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(objectRestapi, SIGNAL(successSignal(QString)), this, SLOT(successSlot(QString)));
     connect(objectRestapi, SIGNAL(loginSignal(bool)), this, SLOT(loginSlot(bool)));
     ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget_2->setCurrentIndex(1);
 }
 
 MainWindow::~MainWindow()
@@ -22,6 +25,34 @@ MainWindow::~MainWindow()
     delete objectRestapi;
     ui = nullptr;
     objectRestapi = nullptr;
+}
+
+void MainWindow::handleClick()
+{
+    QObject * sender = QObject::sender();
+    qDebug() << sender->objectName();
+    QStringList nappi = sender->objectName().split('_');
+//    qDebug() << nappi.at(1);
+    int インデックス=0;
+
+    if(ui->stackedWidget->currentIndex() == 0){
+        インデックス = 0;
+    }else if(ui->stackedWidget->currentIndex() == 6){
+        インデックス = 1;
+        startIdleTimer();
+    }
+
+    QString teksti = lineEdits.at(インデックス)->text();
+
+    if(nappi.at(1) == "bk"){
+        teksti.chop(1);
+    }else{
+        teksti.append(nappi.at(1));
+    }
+
+    lineEdits.at(インデックス)->setText(teksti);
+
+
 }
 
 void MainWindow::loginSlot(bool response){
@@ -73,6 +104,7 @@ void MainWindow::stopIdleTimer(){
 void MainWindow::returnToMenu(){
     stopIdleTimer();
     ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget_2->hide();
     startMenuIdleTimer();
 }
 
@@ -143,6 +175,7 @@ void MainWindow::on_loginPushButton_clicked()
    //objectRestapi->setAccount(ui->loginLineEdit->text());
    //objectRestapi->setCryptoAccount(ui->loginLineEdit->text());
    objectRestapi->login(ui->loginLineEdit->text(), ui->loginPinLineEdit->text());
+   ui->stackedWidget_2->hide();
    startMenuIdleTimer();
 }
 
@@ -184,7 +217,9 @@ void MainWindow::on_exitCryptoPushButton_clicked()
 void MainWindow::on_buySelectPushButton_clicked()
 {
   ui->stackedWidget->setCurrentIndex(6);
-  ui->balancelabel->setText("Tililläsi on: "+QString::number(objectRestapi->getBalance(), 'f', 2));
+  ui->balancelabel->setText("Tililläsi on: "+QString::number(objectRestapi->getBalance(), 'f', 2)+ '\n'
+                            + "Kryptovaluutan kurssi on 1€ = "+QString::number(objectRestapi->getRate(), 'f', 5));
+  ui->stackedWidget_2->show();
   startIdleTimer();
 }
 
@@ -206,4 +241,24 @@ void MainWindow::on_logoutPushButton_clicked()
    objectRestapi->logout();
    returnToLogin();
 
+}
+
+void MainWindow::on_kp_1_clicked()
+{
+   handleClick();
+}
+
+void MainWindow::on_kp_2_clicked()
+{
+   handleClick();
+}
+
+void MainWindow::on_kp_3_clicked()
+{
+   handleClick();
+}
+
+void MainWindow::on_kp_bk_clicked()
+{
+   handleClick();
 }
