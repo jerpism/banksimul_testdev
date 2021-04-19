@@ -20,8 +20,6 @@ public:
     void login(QString, QString);
     void logout();
     void withdrawMoney(QString);
-    void setAccount(QString);
-    void setCryptoAccount(QString);
     void transferMoney(QString, QString);
     void buyCrypto(QString);
     void sellCrypto(QString);
@@ -41,6 +39,9 @@ signals:
     void loginSignal(bool);
 
 private:
+    void setAccount(QString);
+    void setCryptoAccount(QString);
+    QString cardid;
     QString credentials;
     QString account;
     QString cryptoaccount;

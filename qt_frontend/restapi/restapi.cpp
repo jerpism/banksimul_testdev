@@ -9,9 +9,11 @@ Restapi::Restapi()
 }
 
 void Restapi::login(QString card, QString pin){
+    //Alussa asetetaan pyyntöä varten tarvittavat tiedot pyyntöön
     QJsonObject json_obj;
     json_obj.insert("id", card);
     json_obj.insert("pin", pin);
+    cardid = card;
 
     QNetworkRequest request(url+"/login");
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -20,16 +22,22 @@ void Restapi::login(QString card, QString pin){
 
     request.setRawHeader("Authorization", headerData.toLocal8Bit());
 
-   loginManager = new QNetworkAccessManager;
-   connect(loginManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(loginSlot(QNetworkReply*)));
-   loginReply = loginManager->post(request, QJsonDocument(json_obj).toJson());
+    //Luodaan loginManager -olio ja liitetään se slottiin.
+    loginManager = new QNetworkAccessManager;
+    connect(loginManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(loginSlot(QNetworkReply*)));
+    //Lähetetään POST pyyntö palvelimelle
+    loginReply = loginManager->post(request, QJsonDocument(json_obj).toJson());
 }
 void Restapi::logout(){
+    /* Asetetaan tilien muuttujat tyhjiksi kun käyttäjä
+     * kirjautuu ulos */
+   cardid= "";
    account = "";
    cryptoaccount = "";
 }
 
 void Restapi::setAccount(QString card){
+   //Alussa asetetaan pyyntöä varten tarvittavat tiedot pyyntöön
    QNetworkRequest request(url+"/card/getAccount/"+card);
    request.setSslConfiguration(config);
    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -43,6 +51,7 @@ void Restapi::setAccount(QString card){
 }
 
 void Restapi::setCryptoAccount(QString card){
+   //Alussa asetetaan pyyntöä varten tarvittavat tiedot pyyntöön
    QNetworkRequest request(url+"/card/getCryptoAccount/"+card);
    config.setPeerVerifyMode(QSslSocket::VerifyNone);
    request.setSslConfiguration(config);
@@ -58,6 +67,7 @@ void Restapi::setCryptoAccount(QString card){
 }
 
 void Restapi::transferMoney(QString recipient, QString amount){
+    //Alussa asetetaan pyyntöä varten tarvittavat tiedot pyyntöön
     QJsonObject json_obj;
     json_obj.insert("id_sender", account);
     json_obj.insert("id_recipient", recipient);
@@ -88,6 +98,7 @@ void Restapi::transferMoney(QString recipient, QString amount){
 }
 
 void Restapi::buyCrypto(QString amount){
+    //Alussa asetetaan pyyntöä varten tarvittavat tiedot pyyntöön
     QJsonObject json_obj;
     json_obj.insert("id_acc", account);
     json_obj.insert("id_crypto", cryptoaccount);
@@ -115,6 +126,7 @@ void Restapi::buyCrypto(QString amount){
 }
 
 void Restapi::sellCrypto(QString amount){
+    //Alussa asetetaan pyyntöä varten tarvittavat tiedot pyyntöön
     QJsonObject json_obj;
     json_obj.insert("id_acc", account);
     json_obj.insert("id_crypto", cryptoaccount);
@@ -139,6 +151,7 @@ void Restapi::sellCrypto(QString amount){
 }
 
 double Restapi::getBalance(){
+    //Alussa asetetaan pyyntöä varten tarvittavat tiedot pyyntöön
     QNetworkRequest request(url+"/account/getBalance/"+account);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QSslConfiguration config = QSslConfiguration::defaultConfiguration();
@@ -164,6 +177,7 @@ double Restapi::getBalance(){
 }
 
 double Restapi::getRate(){
+    //Alussa asetetaan pyyntöä varten tarvittavat tiedot pyyntöön
     QNetworkRequest request(url+"/rates/getRate/");
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QSslConfiguration config = QSslConfiguration::defaultConfiguration();
@@ -189,6 +203,7 @@ double Restapi::getRate(){
 }
 
 double Restapi::getCryptoBalance(){
+    //Alussa asetetaan pyyntöä varten tarvittavat tiedot pyyntöön
     QNetworkRequest request(url+"/cryptoaccount/getBalance/"+cryptoaccount);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QSslConfiguration config = QSslConfiguration::defaultConfiguration();
@@ -214,6 +229,7 @@ double Restapi::getCryptoBalance(){
 }
 
 void Restapi::withdrawMoney(QString amount){
+    //Alussa asetetaan pyyntöä varten tarvittavat tiedot pyyntöön
     QJsonObject json_obj;
     json_obj.insert("id", account);
     json_obj.insert("amount", amount);
@@ -246,9 +262,15 @@ void Restapi::loginSlot(QNetworkReply* reply){
     QByteArray response_data = reply->readAll();
     qDebug() << "login vastaus: " + response_data;
 
+    /* Jos palvelin vastaa TRUE tilinumeron ja pin-koodin vertaukseen
+     * lähetetään pääohjelmalle signaali, että kirjautuminen onnistui */
     if(response_data == "true"){
+        this->setAccount(cardid);
+        this->setCryptoAccount(cardid);
         emit loginSignal(true);
     }else{
+    //Jos palvelin taas vastaa FALSE, niin kerrotaan pääohjelmalle, että kirjautuminen ei onnistunut
+        this->logout();
         emit loginSignal(false);
     }
 
@@ -288,7 +310,7 @@ void Restapi::transferSlot(QNetworkReply* reply){
 void Restapi::convertCryptoSlot(QNetworkReply* reply){
    QByteArray response_data = reply->readAll();
    qDebug() << "Krypton oston data: " + response_data;
-   if(response_data != "1"){
+   if(response_data.toInt() > 1 && response_data.toInt() <=5){
        emit successSignal("Krypton vaihto onnistui");
    }else{
        emit errorSignal("Krypton vaihdossa oli virhe");
@@ -305,8 +327,8 @@ void Restapi::accSlot(QNetworkReply* reply){
     qDebug() << response_data;
     if(response_data == "\"Account not found\""){
         qDebug() << "Tiliä ei löytynyt";
-        emit errorSignal("Tiliä ei ole");
-        account = "404";
+//        emit errorSignal("Tiliä ei ole");
+        account = "";
     }else{
         account = response_data;
     }
@@ -323,7 +345,7 @@ void Restapi::cryptoSlot(QNetworkReply* reply){
 
     if(response_data == "\"Account not found\""){
         qDebug() << "Kryptotiliä ei löytynyt";
-        cryptoaccount = "404";
+        cryptoaccount = "";
     }else{
         cryptoaccount = response_data;
     }
