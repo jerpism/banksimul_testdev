@@ -31,6 +31,7 @@ private slots:
     void returnToLogin();
     void successSlot(QString);
     void loginSlot(bool);
+    void lineEditFocus();
 
     void errorSlot(QString);
 
@@ -82,11 +83,35 @@ private slots:
 
     void on_kp_bk_clicked();
 
+    void on_kp_4_clicked();
+
+    void on_kp_5_clicked();
+
+    void on_kp_6_clicked();
+
+    void on_kp_7_clicked();
+
+    void on_kp_8_clicked();
+
+    void on_kp_9_clicked();
+
+    void on_kp_decimal_clicked();
+
+    void on_kp_ok_clicked();
+
+    void on_kp_0_clicked();
+
+
+    void on_loginHack_clicked();
+
+    void on_loginPinHack_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString credentials;
     QString tili;
     QString url;
+    int lineindex;
     Restapi *objectRestapi;
     QTimer *timer;
     QList<QLineEdit *> lineEdits;
