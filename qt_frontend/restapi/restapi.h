@@ -26,12 +26,12 @@ public:
 
 
 private slots:
-    void withdrawSlot(QNetworkReply *reply);
-    void accSlot(QNetworkReply *reply);
-    void cryptoSlot(QNetworkReply *reply);
-    void transferSlot(QNetworkReply *reply);
-    void convertCryptoSlot(QNetworkReply *reply);
-    void loginSlot(QNetworkReply *reply);
+    void withdrawSlot();
+    void accSlot();
+    void cryptoSlot();
+    void transferSlot();
+    void convertCryptoSlot();
+    void loginSlot();
 
 signals:
     void errorSignal(QString);
@@ -48,31 +48,16 @@ private:
     QString url;
     QSslConfiguration config;
 
-    QNetworkAccessManager *balanceManager;
+    QNetworkAccessManager *networkManager;
+
     QNetworkReply *balanceReply;
-
-    QNetworkAccessManager *cryptoBalanceManager;
     QNetworkReply *cryptoBalanceReply;
-
-    QNetworkAccessManager *withdrawManager;
     QNetworkReply *withdrawReply;
-
-    QNetworkAccessManager *accManager;
     QNetworkReply *accReply;
-
-    QNetworkAccessManager *cryptoManager;
     QNetworkReply *cryptoReply;
-
-    QNetworkAccessManager *convertCryptoManager;
     QNetworkReply *convertCryptoReply;
-
-    QNetworkAccessManager *transferManager;
     QNetworkReply *transferReply;
-
-    QNetworkAccessManager *loginManager;
     QNetworkReply *loginReply;
-
-    QNetworkAccessManager *ratesManager;
     QNetworkReply *ratesReply;
 };
 #endif // RESTAPI_H
