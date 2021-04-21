@@ -20,7 +20,7 @@ withdraw_money:BEGIN
     SET @test=row_count();
     IF(@test>0) THEN
 		COMMIT;
-			INSERT INTO account_action(id_account,amount,date,action_type) VALUES(id,amount,NOW(),'otto');
+			INSERT INTO account_action(id_account,amount,date,action_type) VALUES(id,-amount,NOW(),'otto');
 	ELSE
 		ROLLBACK; 
 	END IF;
