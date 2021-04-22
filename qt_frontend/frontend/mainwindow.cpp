@@ -84,7 +84,7 @@ void MainWindow::handleClick()
 void MainWindow::loginSlot(bool response){
    if(response ==true){
        ui->stackedWidget->setCurrentIndex(1);
-       ui->namelabel->setText(objectRestapi->getName());
+       ui->namelabel->setText("Tervetuloa " +objectRestapi->getName());
        ui->keypad->hide();
 //       objectRestapi->setAccount(ui->loginLineEdit->text());
 //      objectRestapi->setCryptoAccount(ui->loginLineEdit->text());
@@ -207,6 +207,7 @@ void MainWindow::on_loginPushButton_clicked()
    //objectRestapi->setAccount(ui->loginLineEdit->text());
    //objectRestapi->setCryptoAccount(ui->loginLineEdit->text());
    objectRestapi->login(ui->loginLineEdit->text(), ui->loginPinLineEdit->text());
+
 //   ui->keypad->hide();
    startMenuIdleTimer();
 }
