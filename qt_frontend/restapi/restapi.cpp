@@ -11,6 +11,14 @@ Restapi::Restapi()
     networkManager = new QNetworkAccessManager;
 }
 
+Restapi::~Restapi()
+{
+    credentials = "";
+    url = "";
+    delete networkManager;
+    networkManager = nullptr;
+}
+
 void Restapi::login(QString card, QString pin){
     //Alussa asetetaan pyyntöä varten tarvittavat tiedot json objectiin
     QJsonObject json_obj;
@@ -316,7 +324,7 @@ void Restapi::withdrawSlot()
     QByteArray response_data=withdrawReply->readAll();
     qDebug() << "vastaus: " +response_data;
 
-    if(response_data.toInt() < 3){
+    if(response_data.toInt() < 1){
        emit errorSignal("Nosto epäonnistui");
     }else{
        emit successSignal("Nosto onnistui");

@@ -14,9 +14,11 @@ class RESTAPI_EXPORT Restapi : public QObject
     Q_OBJECT
 public:
     Restapi();
+    ~Restapi();
     double getBalance();
     double getCryptoBalance();
     double getRate();
+    QString getName();
     void login(QString, QString);
     void logout();
     void withdrawMoney(QString);
