@@ -84,6 +84,7 @@ void MainWindow::handleClick()
 void MainWindow::loginSlot(bool response){
    if(response ==true){
        ui->stackedWidget->setCurrentIndex(1);
+       ui->namelabel->setText(objectRestapi->getName());
        ui->keypad->hide();
 //       objectRestapi->setAccount(ui->loginLineEdit->text());
 //      objectRestapi->setCryptoAccount(ui->loginLineEdit->text());

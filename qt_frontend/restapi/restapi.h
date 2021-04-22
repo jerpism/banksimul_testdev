@@ -61,5 +61,6 @@ private:
     QNetworkReply *transferReply;
     QNetworkReply *loginReply;
     QNetworkReply *ratesReply;
+    QNetworkReply *nameReply;
 };
 #endif // RESTAPI_H
