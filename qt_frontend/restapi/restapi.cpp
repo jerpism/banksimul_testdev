@@ -63,20 +63,15 @@ QString Restapi::getName(){
    connect(nameReply, SIGNAL(finished()), &loop, SLOT(quit()));
    loop.exec();
 
-   qDebug() << nameReply->readAll();
    QByteArray response_data = nameReply->readAll();
 
-  // QJsonDocument json_doc=QJsonDocument::fromJson(response_data);
-  // QJsonObject json_obj=json_doc.object();
-  // QString customer = json_obj["fname"].toString()+" "+json_obj["lname"].toString();
    QJsonDocument json_doc=QJsonDocument::fromJson(response_data);
    QJsonObject json_obj=json_doc.object();
-   QString person=json_obj["fname"].toString()+" "+json_obj["lname"].toString()+" "+QString::number(json_obj["money"].toDouble())+ "\r\n";
-
-   qDebug() << json_obj["fname"].toString();
+   QString customer=json_obj["fullname"].toString();
+   qDebug() << customer;
 
    nameReply->deleteLater();
-   return person;
+   return customer;
 }
 
 void Restapi::setAccount(QString card){
