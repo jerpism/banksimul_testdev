@@ -49,6 +49,36 @@ void Restapi::logout(){
    cryptoaccount = "";
 }
 
+QString Restapi::getName(){
+   QNetworkRequest request(url+"/customer/getName/"+cardid);
+   request.setSslConfiguration(config);
+   request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+   QByteArray data = credentials.toLocal8Bit().toBase64();
+   QString headerData = "Basic " + data;
+
+   request.setRawHeader("Authorization", headerData.toLocal8Bit());
+
+   nameReply = networkManager->get(request);
+   QEventLoop loop;
+   connect(nameReply, SIGNAL(finished()), &loop, SLOT(quit()));
+   loop.exec();
+
+   qDebug() << nameReply->readAll();
+   QByteArray response_data = nameReply->readAll();
+
+  // QJsonDocument json_doc=QJsonDocument::fromJson(response_data);
+  // QJsonObject json_obj=json_doc.object();
+  // QString customer = json_obj["fname"].toString()+" "+json_obj["lname"].toString();
+   QJsonDocument json_doc=QJsonDocument::fromJson(response_data);
+   QJsonObject json_obj=json_doc.object();
+   QString person=json_obj["fname"].toString()+" "+json_obj["lname"].toString()+" "+QString::number(json_obj["money"].toDouble())+ "\r\n";
+
+   qDebug() << json_obj["fname"].toString();
+
+   nameReply->deleteLater();
+   return person;
+}
+
 void Restapi::setAccount(QString card){
    QNetworkRequest request(url+"/card/getAccount/"+card);
    request.setSslConfiguration(config);

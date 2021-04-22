@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="loginpage">
      <widget class="QWidget" name="layoutWidget">
@@ -170,9 +170,22 @@
        <string>Kirjaudu ulos</string>
       </property>
      </widget>
+     <widget class="QLabel" name="namelabel">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>30</y>
+        <width>441</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="nostopage">
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -482,12 +495,12 @@
       <height>231</height>
      </rect>
     </property>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>30</x>
        <y>20</y>
-       <width>231</width>
+       <width>256</width>
        <height>201</height>
       </rect>
      </property>
