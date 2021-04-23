@@ -106,6 +106,8 @@ private slots:
 
     void on_loginPinHack_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString credentials;
