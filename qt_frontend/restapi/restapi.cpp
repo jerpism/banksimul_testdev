@@ -362,7 +362,7 @@ void Restapi::transferSlot(){
     QByteArray response_data=transferReply->readAll();
     qDebug() << response_data;
 
-    if(response_data == ""){
+    if(response_data == "" || response_data.toInt() <= 0){
        emit errorSignal("Siirto ei onnistunut");
     }else{
        emit successSignal("Siirto onnistui");

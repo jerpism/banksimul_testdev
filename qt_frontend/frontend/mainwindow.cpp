@@ -9,6 +9,8 @@ MainWindow::MainWindow(QWidget *parent)
     lineEdits.append(ui->loginPinLineEdit);
     lineEdits.append(ui->buyCryptoLineEdit);
     lineEdits.append(ui->loginLineEdit);
+    lineEdits.append(ui->recipientLineEdit);
+    lineEdits.append(ui->transferAmountLineEdit);
     credentials="admin:1234";
     url = "https://91.145.117.152:3000";
     objectRestapi = new Restapi;
@@ -55,11 +57,10 @@ void MainWindow::handleClick()
     qDebug() << sender->objectName();
     QStringList nappi = sender->objectName().split('_');
 //    qDebug() << nappi.at(1);
-    int インデックス=2;
 
 //    }else if(ui->stackedWidget->currentIndex() == 6){
- //       インデックス = 1;
-  //      startIdleTimer();
+ int       インデックス = 1;
+       startIdleTimer();
    // }
     if(ui->loginLineEdit->hasFocus()){
         インデックス=2;
@@ -215,6 +216,8 @@ void MainWindow::on_loginPushButton_clicked()
 void MainWindow::on_startSiirtoPushButton_clicked()
 {
    ui->stackedWidget->setCurrentIndex(3);
+   lineindex = 3;
+   ui->keypad->show();
    startIdleTimer();
 }
 
@@ -354,4 +357,11 @@ void MainWindow::on_loginPinHack_clicked()
 {
    this->lineEditFocus();
    ui->loginPinLineEdit->setFocus();
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+   ui->stackedWidget->setCurrentIndex(9);
+   lineindex = 4;
+   startIdleTimer();
 }
