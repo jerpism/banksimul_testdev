@@ -22,6 +22,13 @@ const account = {
     getBalance: function(id, callback){
          return db.query(
             'SELECT balance FROM account WHERE id_account=?',[id],callback);
+    },
+
+    exists: function(id, callback){
+         return db.query(
+	    'SELECT count(*) as count FROM account WHERE id_account=?',[id],callback);
     }
+ 
+        
 };
 module.exports = account;
