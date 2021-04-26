@@ -40,4 +40,20 @@ router.get('/getBalance/:id',
         });
     });
 
+router.get('/exists/:id',
+   function(request, response){
+       account.exists(request.params.id, function(err, dbResult){
+           if(err){
+               response.json(err.errno);
+           }else{
+               if(dbResult[0].count > 0){
+                   response.send(true);
+               }else{
+                   response.send(false);
+               }
+           }
+       });
+   });
+
+
 module.exports = router;
