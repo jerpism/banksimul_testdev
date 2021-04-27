@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>9</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="loginpage">
      <widget class="QWidget" name="layoutWidget">
@@ -103,85 +103,79 @@
        <string/>
       </property>
      </widget>
+     <widget class="QPushButton" name="closeNostoPushButton">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>440</y>
+        <width>191</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Palaa</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="menupage">
-     <widget class="QPushButton" name="startTestPushButton">
-      <property name="geometry">
-       <rect>
-        <x>250</x>
-        <y>310</y>
-        <width>141</width>
-        <height>71</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Krypto</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="startNostoPushButton">
-      <property name="geometry">
-       <rect>
-        <x>420</x>
-        <y>310</y>
-        <width>151</width>
-        <height>71</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Nosto</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="startSiirtoPushButton">
-      <property name="geometry">
-       <rect>
-        <x>420</x>
-        <y>400</y>
-        <width>151</width>
-        <height>81</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Siirto</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="input1">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>41</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>1</string>
-      </property>
-     </widget>
      <widget class="QPushButton" name="logoutPushButton">
       <property name="geometry">
        <rect>
-        <x>250</x>
+        <x>310</x>
         <y>500</y>
-        <width>101</width>
-        <height>25</height>
+        <width>111</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="text">
        <string>Kirjaudu ulos</string>
       </property>
      </widget>
-     <widget class="QLabel" name="namelabel">
+     <widget class="QWidget" name="">
       <property name="geometry">
        <rect>
-        <x>160</x>
-        <y>30</y>
-        <width>441</width>
-        <height>141</height>
+        <x>110</x>
+        <y>10</y>
+        <width>551</width>
+        <height>361</height>
        </rect>
       </property>
-      <property name="text">
-       <string/>
-      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="namelabel">
+         <property name="font">
+          <font>
+           <pointsize>28</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Testiteksti</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QSplitter" name="splitter_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <widget class="QPushButton" name="startTestPushButton">
+          <property name="text">
+           <string>Krypto</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="startSiirtoPushButton">
+          <property name="text">
+           <string>Siirto</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="startNostoPushButton">
+          <property name="text">
+           <string>Nosto</string>
+          </property>
+         </widget>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
     <widget class="QWidget" name="nostopage">
@@ -487,19 +481,6 @@
       </property>
      </widget>
     </widget>
-   </widget>
-   <widget class="QPushButton" name="closeNostoPushButton">
-    <property name="geometry">
-     <rect>
-      <x>670</x>
-      <y>540</y>
-      <width>191</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Palaa</string>
-    </property>
    </widget>
    <widget class="QWidget" name="keypad" native="true">
     <property name="geometry">
@@ -1502,6 +1483,8 @@
      </layout>
     </widget>
    </widget>
+   <zorder>keypad</zorder>
+   <zorder>stackedWidget</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
