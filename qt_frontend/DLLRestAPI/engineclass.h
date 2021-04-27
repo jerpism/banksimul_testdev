@@ -26,6 +26,7 @@ public:
     void buyCrypto(QString);
     void sellCrypto(QString);
     void transferMoney(QString, QString);
+    bool accountExists(QString);
 
 private slots:
     void loginSlot();
@@ -57,6 +58,7 @@ private:
     QNetworkReply *rateReply;
     QNetworkReply *cryptoReply;
     QNetworkReply *transferReply;
+    QNetworkReply *existsReply;
 
 };
 

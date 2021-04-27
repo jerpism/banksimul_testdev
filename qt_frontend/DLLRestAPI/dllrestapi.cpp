@@ -53,3 +53,7 @@ void DLLRestAPI::transferMoney(QString recipient, QString amount)
     objectEngineCLass->transferMoney(recipient, amount);
 }
 
+bool DLLRestAPI::accountExists(QString account){
+    return objectEngineCLass->accountExists(account);
+}
+

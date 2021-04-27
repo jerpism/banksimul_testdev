@@ -19,6 +19,7 @@ public:
     void buyCrypto(QString);
     void sellCrypto(QString);
     void transferMoney(QString, QString);
+    bool accountExists(QString);
 
 private:
     EngineClass *objectEngineCLass;

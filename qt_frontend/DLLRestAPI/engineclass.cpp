@@ -189,6 +189,34 @@ double EngineClass::getCryptoBalance(){
     return response.toDouble();
 }
 
+bool EngineClass::accountExists(QString account){
+    QNetworkRequest request(url+"/account/exists/"+account);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setSslConfiguration(config);
+    QByteArray data = credentials.toLocal8Bit().toBase64();
+    QString headerData = "Basic " + data;
+
+    request.setRawHeader("Authorization", headerData.toLocal8Bit());
+
+    existsReply = networkManager->get(request);
+
+    QEventLoop loop;
+    connect(existsReply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+
+    QByteArray response_data = existsReply->readAll();
+    qDebug() << response_data;
+
+    existsReply->deleteLater();
+
+    if(response_data == "true"){
+        return true;
+    }else{
+        return false;
+    }
+
+
+}
 
 void EngineClass::withdrawMoney(QString amount){
     //Asetetaan tiedot json objectiin
