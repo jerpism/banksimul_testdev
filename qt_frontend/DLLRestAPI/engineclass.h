@@ -19,6 +19,9 @@ public:
     double getBalance();
     double getCryptoBalance();
     double getRate();
+    QString getName();
+    QString getAddr();
+    QString getPhone();
 
     void login(QString, QString);
     void logout();
@@ -27,6 +30,10 @@ public:
     void sellCrypto(QString);
     void transferMoney(QString, QString);
     bool accountExists(QString);
+    void getInfo();
+
+signals:
+    void gotInfo();
 
 private slots:
     void loginSlot();
@@ -35,6 +42,7 @@ private slots:
     void withdrawSlot();
     void cryptoSlot();
     void transferSlot();
+    void infoSlot();
 
 private:
     void setAccount(QString);
@@ -45,6 +53,10 @@ private:
     QString account;
     QString cryptoaccount;
     QString cardid;
+
+    QString name;
+    QString phone;
+    QString addr;
 
     QNetworkAccessManager *networkManager;
     QSslConfiguration config;
@@ -59,6 +71,7 @@ private:
     QNetworkReply *cryptoReply;
     QNetworkReply *transferReply;
     QNetworkReply *existsReply;
+    QNetworkReply *infoReply;
 
 };
 
