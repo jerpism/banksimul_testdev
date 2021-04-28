@@ -21,6 +21,9 @@ void EngineClass::logout(){
    cardid = "";
    account = "";
    cryptoaccount = "";
+   name = "";
+   phone = "";
+   addr = "";
 }
 
 void EngineClass::login(QString card, QString pin){
@@ -55,10 +58,11 @@ void EngineClass::loginSlot(){
     if(response_data == "true"){
         this->setAccount(cardid);
         this->setCryptoAccount(cardid);
+        this->getInfo();
 //        emit loginSignal(true);
     }else{
     //Jos palvelin taas vastaa FALSE, niin kerrotaan pääohjelmalle, että kirjautuminen ei onnistunut
-//        this->logout();
+        this->logout();
 //        emit loginSignal(false);
     }
 
@@ -423,4 +427,49 @@ void EngineClass::transferSlot(){
     }
 
     transferReply->deleteLater();
+}
+
+void EngineClass::getInfo()
+{
+   QNetworkRequest request(url+"/customer/getInfo/"+cardid);
+   request.setSslConfiguration(config);
+   request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+   QByteArray data = credentials.toLocal8Bit().toBase64();
+   QString headerData = "Basic " + data;
+
+   request.setRawHeader("Authorization", headerData.toLocal8Bit());
+
+   infoReply = networkManager->get(request);
+//   QEventLoop loop;
+   connect(infoReply, SIGNAL(finished()), this, SLOT(infoSlot()));
+//   loop.exec();
+
+}
+
+void EngineClass::infoSlot(){
+   QByteArray response_data = infoReply->readAll();
+
+   QJsonDocument json_doc=QJsonDocument::fromJson(response_data);
+   QJsonObject json_obj=json_doc.object();
+   name=json_obj["fullname"].toString();
+   addr=json_obj["address"].toString();
+   phone=json_obj["phone"].toString();
+   qDebug() << name;
+
+   emit gotInfo();
+   qDebug() << "gotInfo";
+
+   infoReply->deleteLater();
+}
+
+QString EngineClass::getName(){
+    return name;
+}
+
+QString EngineClass::getAddr(){
+    return addr;
+}
+
+QString EngineClass::getPhone(){
+    return phone;
 }

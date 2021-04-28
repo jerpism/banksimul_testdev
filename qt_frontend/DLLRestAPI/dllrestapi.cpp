@@ -2,58 +2,75 @@
 
 DLLRestAPI::DLLRestAPI()
 {
-    objectEngineCLass = new EngineClass;
+    objectEngineClass = new EngineClass;
+    connect(objectEngineClass, SIGNAL(gotInfo()), this, SLOT(gotInfoSlot()));
 }
 
 DLLRestAPI::~DLLRestAPI()
 {
-    delete objectEngineCLass;
-    objectEngineCLass = nullptr;
+    delete objectEngineClass;
+    objectEngineClass = nullptr;
 }
 
 QString DLLRestAPI::getBalance(){
-   return QString::number(objectEngineCLass->getBalance(), 'f', 2);
+   return QString::number(objectEngineClass->getBalance(), 'f', 2);
 }
 
 QString DLLRestAPI::getCryptoBalance(){
-   return QString::number(objectEngineCLass->getCryptoBalance(), 'f', 8);
+   return QString::number(objectEngineClass->getCryptoBalance(), 'f', 8);
 }
 
 QString DLLRestAPI::getRate(){
-    return QString::number(objectEngineCLass->getRate(), 'f', 5);
+    return QString::number(objectEngineClass->getRate(), 'f', 5);
 }
 
 void DLLRestAPI::login(QString card, QString pin)
 {
-    objectEngineCLass->login(card, pin);
+    objectEngineClass->login(card, pin);
 }
 
 void DLLRestAPI::logout()
 {
-    objectEngineCLass->logout();
+    objectEngineClass->logout();
 }
 
 void DLLRestAPI::withdrawMoney(QString amount)
 {
-    objectEngineCLass->withdrawMoney(amount);
+    objectEngineClass->withdrawMoney(amount);
 }
 
 void DLLRestAPI::buyCrypto(QString amount)
 {
-    objectEngineCLass->buyCrypto(amount);
+    objectEngineClass->buyCrypto(amount);
 }
 
 void DLLRestAPI::sellCrypto(QString amount)
 {
-    objectEngineCLass->sellCrypto(amount);
+    objectEngineClass->sellCrypto(amount);
 }
 
 void DLLRestAPI::transferMoney(QString recipient, QString amount)
 {
-    objectEngineCLass->transferMoney(recipient, amount);
+    objectEngineClass->transferMoney(recipient, amount);
 }
 
 bool DLLRestAPI::accountExists(QString account){
-    return objectEngineCLass->accountExists(account);
+    return objectEngineClass->accountExists(account);
+}
+
+QString DLLRestAPI::getName(){
+    return objectEngineClass->getName();
+}
+
+QString DLLRestAPI::getAddr(){
+    return objectEngineClass->getAddr();
+}
+
+QString DLLRestAPI::getPhone(){
+    return objectEngineClass->getPhone();
+}
+
+void DLLRestAPI::gotInfoSlot(){
+    emit infoReceived();
 }
 
