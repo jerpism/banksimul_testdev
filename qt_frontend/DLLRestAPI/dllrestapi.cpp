@@ -4,6 +4,9 @@ DLLRestAPI::DLLRestAPI()
 {
     objectEngineClass = new EngineClass;
     connect(objectEngineClass, SIGNAL(gotInfo()), this, SLOT(gotInfoSlot()));
+    connect(objectEngineClass, SIGNAL(loginSignal(bool)), this, SLOT(loginSlot(bool)));
+    connect(objectEngineClass, SIGNAL(errorSignal(QString)), this, SLOT(errorSlot(QString)));
+    connect(objectEngineClass, SIGNAL(successSignal(QString)), this, SLOT(successSlot(QString)));
 }
 
 DLLRestAPI::~DLLRestAPI()
@@ -72,5 +75,17 @@ QString DLLRestAPI::getPhone(){
 
 void DLLRestAPI::gotInfoSlot(){
     emit infoReceived();
+}
+
+void DLLRestAPI::loginSlot(bool response){
+    emit loginSignal(response);
+}
+
+void DLLRestAPI::successSlot(QString response){
+    emit successSignal(response);
+}
+
+void DLLRestAPI::errorSlot(QString response){
+    emit errorSignal(response);
 }
 

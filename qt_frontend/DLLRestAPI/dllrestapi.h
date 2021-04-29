@@ -30,9 +30,15 @@ private:
 
 private slots:
     void gotInfoSlot();
+    void loginSlot(bool);
+    void errorSlot(QString);
+    void successSlot(QString);
 
 signals:
     void infoReceived();
+    void loginSignal(bool);
+    void errorSignal(QString);
+    void successSignal(QString);
 };
 
 #endif // DLLRESTAPI_H

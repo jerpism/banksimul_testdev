@@ -34,6 +34,10 @@ public:
 
 signals:
     void gotInfo();
+    void loginSignal(bool);
+    void errorSignal(QString);
+    void successSignal(QString);
+
 
 private slots:
     void loginSlot();
