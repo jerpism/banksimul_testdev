@@ -59,11 +59,11 @@ void EngineClass::loginSlot(){
         this->setAccount(cardid);
         this->setCryptoAccount(cardid);
         this->getInfo();
-//        emit loginSignal(true);
+        emit loginSignal(true);
     }else{
     //Jos palvelin taas vastaa FALSE, niin kerrotaan pääohjelmalle, että kirjautuminen ei onnistunut
         this->logout();
-//        emit loginSignal(false);
+        emit loginSignal(false);
     }
 
     loginReply->deleteLater();
@@ -235,9 +235,9 @@ void EngineClass::withdrawMoney(QString amount){
      * lähettämään negatiivisen nostopyynnön
      * Estetään myös palvelimen puolella */
     if(amount.toDouble() < 0){
-//        emit errorSignal("Et voi nostaa negatiivisia summia");
+        emit errorSignal("Et voi nostaa negatiivisia summia");
     }else if(saldo - amount.toDouble() < 0 ){
- //       emit errorSignal("Tilillä ei ole tarpeeksi rahaa");
+        emit errorSignal("Tilillä ei ole tarpeeksi rahaa");
     }else{
 
     //Luodaan pyyntö ja asetetaan siihen tarvittavat tiedot
@@ -265,9 +265,9 @@ void EngineClass::withdrawSlot()
     qDebug() << "vastaus: " +response_data;
 
     if(response_data.toInt() < 1){
-//       emit errorSignal("Nosto epäonnistui");
+       emit errorSignal("Nosto epäonnistui");
     }else{
-//      emit successSignal("Nosto onnistui");
+      emit successSignal("Nosto onnistui");
     }
     withdrawReply->deleteLater();
 }
