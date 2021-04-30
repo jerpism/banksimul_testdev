@@ -18,6 +18,7 @@ public:
     void startIdleTimer();
     void startMenuIdleTimer();
     void stopTimer();
+    void handleClick();
 
 private slots:
     void on_loginButton_clicked();
@@ -35,6 +36,30 @@ private slots:
     void returnToMenu();
 
     void on_logoutButton_clicked();
+
+    void on_kp_0_clicked();
+
+    void on_kp_1_clicked();
+
+    void on_kp_2_clicked();
+
+    void on_kp_3_clicked();
+
+    void on_kp_4_clicked();
+
+    void on_kp_5_clicked();
+
+    void on_kp_6_clicked();
+
+    void on_kp_7_clicked();
+
+    void on_kp_8_clicked();
+
+    void on_kp_9_clicked();
+
+    void on_kp_decimal_clicked();
+
+    void on_kp_bk_clicked();
 
 private:
     Ui::MainWindow *ui;

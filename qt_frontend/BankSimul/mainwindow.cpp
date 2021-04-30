@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(objectDLLRestAPI, SIGNAL(infoReceived()), this, SLOT(receivedInfoSlot()));
     connect(objectDLLRestAPI, SIGNAL(errorSignal(QString)), this, SLOT(errorSlot(QString)));
     connect(objectDLLRestAPI, SIGNAL(successSignal(QString)), this, SLOT(successSlot(QString)));
+    ui->keypad->show();
 }
 
 MainWindow::~MainWindow()
@@ -82,6 +83,7 @@ void MainWindow::returnToMenu()
 
 void MainWindow::on_loginButton_clicked()
 {
+   //ui->keypad->hide();
    ui->stackedWidget->setCurrentIndex(1);
    objectDLLRestAPI->login("06000641D4", "1234");
    startMenuIdleTimer();
@@ -110,4 +112,86 @@ void MainWindow::on_withdraw20Button_clicked()
 void MainWindow::on_logoutButton_clicked()
 {
    logout();
+}
+
+
+void MainWindow::handleClick()
+{
+    QObject *sender = QObject::sender();
+    qDebug() << sender->objectName();
+    QStringList nappi = sender->objectName().split('_');
+
+    QString teksti = ui->lineEdit->text();
+
+    if(nappi.at(1) == "bk"){
+        teksti.chop(1);
+    }else if(nappi.at(1) == "decimal"){
+        teksti.append(".");
+    }else{
+        teksti.append(nappi.at(1));
+    }
+
+    ui->lineEdit->setText(teksti);
+}
+
+void MainWindow::on_kp_0_clicked()
+{
+    this->handleClick();
+}
+
+void MainWindow::on_kp_1_clicked()
+{
+    this->handleClick();
+}
+
+
+void MainWindow::on_kp_2_clicked()
+{
+   this->handleClick();
+
+}
+
+void MainWindow::on_kp_3_clicked()
+{
+   this->handleClick();
+}
+
+void MainWindow::on_kp_4_clicked()
+{
+   this->handleClick();
+}
+
+void MainWindow::on_kp_5_clicked()
+{
+   this->handleClick();
+}
+
+void MainWindow::on_kp_6_clicked()
+{
+   this->handleClick();
+}
+
+void MainWindow::on_kp_7_clicked()
+{
+   this->handleClick();
+}
+
+void MainWindow::on_kp_8_clicked()
+{
+   this->handleClick();
+}
+
+void MainWindow::on_kp_9_clicked()
+{
+   this->handleClick();
+}
+
+void MainWindow::on_kp_decimal_clicked()
+{
+   this->handleClick();
+}
+
+void MainWindow::on_kp_bk_clicked()
+{
+   this->handleClick();
 }
