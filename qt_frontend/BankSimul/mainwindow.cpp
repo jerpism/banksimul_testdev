@@ -8,10 +8,23 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     objectDLLRestAPI = new DLLRestAPI;
     timer = new QTimer(this);
+
+    /* lineEditit
+     * 0 login
+     * 1 osta kryptoa
+     * 2 myy kryptoa
+     * 3 tilisiirto tilinr
+     */
+    lineEdits.append(ui->loginLineEdit);
+    lineEdits.append(ui->buyCryptoLineEdit);
+    lineEdits.append(ui->sellCryptoLineEdit);
+    lineEdits.append(ui->transferLineEdit);
+
     connect(objectDLLRestAPI, SIGNAL(infoReceived()), this, SLOT(receivedInfoSlot()));
     connect(objectDLLRestAPI, SIGNAL(errorSignal(QString)), this, SLOT(errorSlot(QString)));
     connect(objectDLLRestAPI, SIGNAL(successSignal(QString)), this, SLOT(successSlot(QString)));
     ui->keypad->show();
+    lineEditFocus = 0; //Aseta näppäimistö toimimaan kirjautumisnäytön lineEdittiin
 }
 
 MainWindow::~MainWindow()
@@ -44,11 +57,21 @@ void MainWindow::stopTimer()
     qDebug() << "Ajastin pysäytetty";
 }
 
+void MainWindow::clearLineEdits()
+{
+    foreach(QLineEdit* lineEdit, lineEdits){
+        lineEdit->setText("");
+    }
+
+}
+
 void MainWindow::logout()
 {
     stopTimer();
     objectDLLRestAPI->logout();
     ui->stackedWidget->setCurrentIndex(0);
+    ui->keypad->show();
+    clearLineEdits();
 }
 void MainWindow::receivedInfoSlot()
 {
@@ -66,24 +89,31 @@ void MainWindow::successSlot(QString response)
 {
     qDebug() << "ONNISTUI: "+response;
 
+
 }
 
 void MainWindow::returnToMenu()
 {
+    ui->keypad->hide();
     ui->stackedWidget->setCurrentIndex(1);
     stopTimer();
     startMenuIdleTimer();
+    clearLineEdits();
 }
 
 /* Sivuindeksit
  * 0 Kirjautuminen
  * 1 Menu
  * 2 Nosto
+ * 3 Kryptomenu
+ * 4 Osta kryptoa
+ * 5 Myy kryptoa
+ * 6 tilisiirto 1
  * */
 
 void MainWindow::on_loginButton_clicked()
 {
-   //ui->keypad->hide();
+   ui->keypad->hide();
    ui->stackedWidget->setCurrentIndex(1);
    objectDLLRestAPI->login("06000641D4", "1234");
    startMenuIdleTimer();
@@ -109,9 +139,43 @@ void MainWindow::on_withdraw20Button_clicked()
    stopTimer();
 }
 
+void MainWindow::on_withdraw40Button_clicked()
+{
+   objectDLLRestAPI->withdrawMoney("40");
+   stopTimer();
+
+}
+
+void MainWindow::on_withdraw60Button_clicked()
+{
+   objectDLLRestAPI->withdrawMoney("60");
+   stopTimer();
+}
+
+void MainWindow::on_withdraw100Button_clicked()
+{
+   objectDLLRestAPI->withdrawMoney("100");
+   stopTimer();
+
+}
+
+void MainWindow::on_withdraw200Button_clicked()
+{
+   objectDLLRestAPI->withdrawMoney("200");
+   stopTimer();
+
+}
+
+void MainWindow::on_withdraw500Button_clicked()
+{
+   objectDLLRestAPI->withdrawMoney("500");
+   stopTimer();
+}
+
 void MainWindow::on_logoutButton_clicked()
 {
    logout();
+   lineEditFocus = 0;//Aseta näppäimistö kirjautumisnäytön lineEdittiin
 }
 
 
@@ -121,7 +185,7 @@ void MainWindow::handleClick()
     qDebug() << sender->objectName();
     QStringList nappi = sender->objectName().split('_');
 
-    QString teksti = ui->lineEdit->text();
+    QString teksti = lineEdits[lineEditFocus]->text();
 
     if(nappi.at(1) == "bk"){
         teksti.chop(1);
@@ -131,7 +195,11 @@ void MainWindow::handleClick()
         teksti.append(nappi.at(1));
     }
 
-    ui->lineEdit->setText(teksti);
+    if(ui->stackedWidget->currentIndex() != 0){
+        startIdleTimer();
+    }
+
+    lineEdits[lineEditFocus]->setText(teksti);
 }
 
 void MainWindow::on_kp_0_clicked()
@@ -194,4 +262,76 @@ void MainWindow::on_kp_decimal_clicked()
 void MainWindow::on_kp_bk_clicked()
 {
    this->handleClick();
+}
+
+void MainWindow::on_cryptoCurrencyButton_clicked()
+{
+   ui->stackedWidget->setCurrentIndex(3);
+   stopTimer();
+   startIdleTimer();
+   ui->keypad->hide();
+}
+
+void MainWindow::on_selectBuyCryptoButton_clicked()
+{
+   ui->cryptoBuyLabel->setText("Tililläsi on "+objectDLLRestAPI->getBalance()+" euroa\n"
+                                "Kryptovaluutan kurssi on 1€ = "+objectDLLRestAPI->getRate());
+   ui->stackedWidget->setCurrentIndex(4);
+   ui->keypad->show();
+   stopTimer();
+   startIdleTimer();
+   lineEditFocus = 1; //Aseta näppäimistö toimimaan krypton ostossa.
+}
+
+void MainWindow::on_cryptoMenuReturnButton_clicked()
+{
+   this->returnToMenu();
+}
+
+void MainWindow::on_buyCryptoReturnButton_clicked()
+{
+   ui->keypad->hide();
+   ui->stackedWidget->setCurrentIndex(3);
+   stopTimer();
+   startIdleTimer();
+   clearLineEdits();
+}
+
+
+void MainWindow::on_buyCryptoButton_clicked()
+{
+   objectDLLRestAPI->buyCrypto(ui->buyCryptoLineEdit->text());
+   stopTimer();
+}
+
+void MainWindow::on_selectSellCryptoButton_clicked()
+{
+   ui->cryptoSellLabel->setText("Tililläsi on "+objectDLLRestAPI->getBalance()+" kryptovaluuttaa\n"
+                                "Kryptovaluutan kurssi on 1 = "+objectDLLRestAPI->getRate()+"€");
+   ui->stackedWidget->setCurrentIndex(5);
+   ui->keypad->show();
+   stopTimer();
+   startIdleTimer();
+   lineEditFocus = 2; //Aseta näppäimistö toimimaan krypton myynnissä.
+}
+
+void MainWindow::on_sellCryptoReturnButton_clicked()
+{
+   ui->keypad->hide();
+   ui->stackedWidget->setCurrentIndex(3);
+   stopTimer();
+   startIdleTimer();
+   clearLineEdits();
+}
+
+void MainWindow::on_transferButton_clicked()
+{
+   ui->keypad->show();
+   ui->stackedWidget->setCurrentIndex(6);
+   lineEditFocus = 3;
+}
+
+void MainWindow::on_transferReturnButton_clicked()
+{
+   returnToMenu();
 }

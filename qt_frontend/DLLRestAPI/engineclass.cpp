@@ -313,7 +313,7 @@ void EngineClass::buyCrypto(QString amount){
      * lähettämään ostopyynnön negatiivisellä summalla.
      * Tämä estetään myös palvelimen puolella */
     if(amount.toDouble() < 0){
-//        emit errorSignal("Et voi ostaa negatiivisia summia");
+        emit errorSignal("Et voi ostaa negatiivisia summia");
     }else{
 
     //Luodaan pyyntö ja asetetaan siihen tarvittavat tiedot
@@ -369,9 +369,9 @@ void EngineClass::cryptoSlot(){
    QByteArray response_data = cryptoReply->readAll();
    qDebug() << "Krypton oston data: " + response_data;
    if(response_data.toInt() > 1 && response_data.toInt() <=5){
-//       emit successSignal("Krypton vaihto onnistui");
+       emit successSignal("Krypton vaihto onnistui");
    }else{
-//       emit errorSignal("Krypton vaihdossa oli virhe");
+       emit errorSignal("Krypton vaihdossa oli virhe");
    }
 
    cryptoReply->deleteLater();

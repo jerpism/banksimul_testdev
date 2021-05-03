@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "dllrestapi.h"
-
+#include <QLineEdit>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -19,6 +19,7 @@ public:
     void startMenuIdleTimer();
     void stopTimer();
     void handleClick();
+    void clearLineEdits();
 
 private slots:
     void on_loginButton_clicked();
@@ -61,9 +62,39 @@ private slots:
 
     void on_kp_bk_clicked();
 
+    void on_cryptoCurrencyButton_clicked();
+
+    void on_selectBuyCryptoButton_clicked();
+
+    void on_cryptoMenuReturnButton_clicked();
+
+    void on_buyCryptoReturnButton_clicked();
+
+    void on_withdraw40Button_clicked();
+
+    void on_withdraw60Button_clicked();
+
+    void on_withdraw100Button_clicked();
+
+    void on_withdraw200Button_clicked();
+
+    void on_withdraw500Button_clicked();
+
+    void on_buyCryptoButton_clicked();
+
+    void on_selectSellCryptoButton_clicked();
+
+    void on_sellCryptoReturnButton_clicked();
+
+    void on_transferButton_clicked();
+
+    void on_transferReturnButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     DLLRestAPI *objectDLLRestAPI;
     QTimer *timer;
+    QList <QLineEdit*> lineEdits;
+    short lineEditFocus;
 };
 #endif // MAINWINDOW_H
