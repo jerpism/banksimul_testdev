@@ -124,7 +124,7 @@ void EngineClass::accSlot(){
     qDebug() << "tili:"+response_data;
     if(response_data == "\"Account not found\""){
         qDebug() << "Tiliä ei löytynyt";
-//        emit errorSignal("Tiliä ei ole");
+        emit errorSignal("Tiliä ei ole");
         account = "";
     }else{
         account = response_data;
@@ -313,7 +313,7 @@ void EngineClass::buyCrypto(QString amount){
      * lähettämään ostopyynnön negatiivisellä summalla.
      * Tämä estetään myös palvelimen puolella */
     if(amount.toDouble() < 0){
-//        emit errorSignal("Et voi ostaa negatiivisia summia");
+        emit errorSignal("Et voi ostaa negatiivisia summia");
     }else{
 
     //Luodaan pyyntö ja asetetaan siihen tarvittavat tiedot
@@ -345,7 +345,7 @@ void EngineClass::sellCrypto(QString amount){
      * lähettämään myyntipyynnön negatiiviselle summalle
      * Estetään myös palvelimen puolella. */
     if(amount.toDouble() < 0){
-//        emit errorSignal("Et voi myydä negatiivisia määriä");
+        emit errorSignal("Et voi myydä negatiivisia määriä");
     }else{
 
     //Luodaan pyyntö ja asetetaan siihen tarvittavat tiedot
@@ -369,9 +369,9 @@ void EngineClass::cryptoSlot(){
    QByteArray response_data = cryptoReply->readAll();
    qDebug() << "Krypton oston data: " + response_data;
    if(response_data.toInt() > 1 && response_data.toInt() <=5){
-//       emit successSignal("Krypton vaihto onnistui");
+       emit successSignal("Krypton vaihto onnistui");
    }else{
-//       emit errorSignal("Krypton vaihdossa oli virhe");
+       emit errorSignal("Krypton vaihdossa oli virhe");
    }
 
    cryptoReply->deleteLater();
@@ -393,10 +393,10 @@ void EngineClass::transferMoney(QString recipient, QString amount){
      * nostolle, ei pitäisi tapahtua ja estetään myös
      * tietokannan puolella, mutta vielä varmuuden vuoksi tässäkin */
     if(amount.toDouble() < 0){
- //       emit errorSignal("Et voi siirtää negatiivisia summia");
+       emit errorSignal("Et voi siirtää negatiivisia summia");
     //Annetaan virhe, jos siirrettävä summa ylittää tilin saldon
     }else if(saldo - amount.toDouble() < 0 ){
-//        emit errorSignal("Tilillä ei ole tarpeeksi rahaa");
+        emit errorSignal("Tilillä ei ole tarpeeksi rahaa");
     }else{
 
     //Luodaan pyyntö ja asetetaan siihen tarvittavat tiedot
@@ -421,9 +421,9 @@ void EngineClass::transferSlot(){
     qDebug() << response_data;
 
     if(response_data == "" || response_data.toInt() <= 0){
-  //     emit errorSignal("Siirto ei onnistunut");
+       emit errorSignal("Siirto ei onnistunut");
     }else{
-   //    emit successSignal("Siirto onnistui");
+      emit successSignal("Siirto onnistui");
     }
 
     transferReply->deleteLater();
