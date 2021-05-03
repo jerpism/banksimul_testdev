@@ -90,6 +90,12 @@ private slots:
 
     void on_transferReturnButton_clicked();
 
+    void on_transferPushButton_clicked();
+
+    void on_transferAmountReturnButton_clicked();
+
+    void on_transferAmountButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     DLLRestAPI *objectDLLRestAPI;

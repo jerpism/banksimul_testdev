@@ -14,11 +14,13 @@ MainWindow::MainWindow(QWidget *parent)
      * 1 osta kryptoa
      * 2 myy kryptoa
      * 3 tilisiirto tilinr
+     * 4 tilisiirto määrä
      */
     lineEdits.append(ui->loginLineEdit);
     lineEdits.append(ui->buyCryptoLineEdit);
     lineEdits.append(ui->sellCryptoLineEdit);
     lineEdits.append(ui->transferLineEdit);
+    lineEdits.append(ui->transferAmountLineEdit);
 
     connect(objectDLLRestAPI, SIGNAL(infoReceived()), this, SLOT(receivedInfoSlot()));
     connect(objectDLLRestAPI, SIGNAL(errorSignal(QString)), this, SLOT(errorSlot(QString)));
@@ -109,6 +111,7 @@ void MainWindow::returnToMenu()
  * 4 Osta kryptoa
  * 5 Myy kryptoa
  * 6 tilisiirto 1
+ * 7 tilisiirto 2
  * */
 
 void MainWindow::on_loginButton_clicked()
@@ -329,9 +332,39 @@ void MainWindow::on_transferButton_clicked()
    ui->keypad->show();
    ui->stackedWidget->setCurrentIndex(6);
    lineEditFocus = 3;
+   startIdleTimer();
 }
 
 void MainWindow::on_transferReturnButton_clicked()
 {
    returnToMenu();
+}
+
+void MainWindow::on_transferPushButton_clicked()
+{
+  if(objectDLLRestAPI->accountExists(ui->transferLineEdit->text())){
+     ui->stackedWidget->setCurrentIndex(7);
+     ui->transferAmountLabel->setText("Syötä siirrettävä rahasumma\n"
+                                      "Tililläsi on "+objectDLLRestAPI->getBalance()+"€");
+     ui->keypad->show();
+     startIdleTimer();
+     lineEditFocus = 4;
+  }else{
+     ui->transferLabel->setText("Annettua tiliä ei ole olemassa!");
+     QTimer::singleShot(10000, this, [&]() { ui->transferLabel->setText("Syötä vastaanottajan tilinumero");});
+     startIdleTimer();
+  }
+}
+
+void MainWindow::on_transferAmountReturnButton_clicked()
+{
+   ui->stackedWidget->setCurrentIndex(6);
+   lineEditFocus = 3;
+   startIdleTimer();
+}
+
+void MainWindow::on_transferAmountButton_clicked()
+{
+   stopTimer();
+   objectDLLRestAPI->transferMoney(ui->transferLineEdit->text(), ui->transferAmountLineEdit->text());
 }
