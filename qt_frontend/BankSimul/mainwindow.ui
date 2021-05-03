@@ -1054,6 +1054,38 @@ Tililläsi on x euroa</string>
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="successPage">
+       <layout class="QGridLayout" name="gridLayout_8">
+        <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+         <widget class="QLabel" name="successLabel">
+          <property name="font">
+           <font>
+            <pointsize>48</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>ONNISTUI</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="errorPage">
+       <layout class="QGridLayout" name="gridLayout_9">
+        <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+         <widget class="QLabel" name="errorLabel">
+          <property name="font">
+           <font>
+            <pointsize>48</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>VIRHE</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
     <item row="1" column="0" alignment="Qt::AlignHCenter">

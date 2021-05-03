@@ -84,13 +84,20 @@ void MainWindow::receivedInfoSlot()
 void MainWindow::errorSlot(QString response)
 {
     qDebug() << "VIRHE: "+response;
+    ui->errorLabel->setText(response);
+    ui->keypad->hide();
+    ui->stackedWidget->setCurrentIndex(9);
+    QTimer::singleShot(10000, this, SLOT(returnToMenu()));
 
 }
 
 void MainWindow::successSlot(QString response)
 {
     qDebug() << "ONNISTUI: "+response;
-
+    ui->successLabel->setText(response);
+    ui->keypad->hide();
+    ui->stackedWidget->setCurrentIndex(8);
+    QTimer::singleShot(5000, this, SLOT(returnToMenu()));
 
 }
 
@@ -112,6 +119,8 @@ void MainWindow::returnToMenu()
  * 5 Myy kryptoa
  * 6 tilisiirto 1
  * 7 tilisiirto 2
+ * 8 onnistuminen
+ * 9 virhe
  * */
 
 void MainWindow::on_loginButton_clicked()
