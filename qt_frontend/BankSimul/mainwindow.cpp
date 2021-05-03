@@ -309,7 +309,7 @@ void MainWindow::on_buyCryptoButton_clicked()
 
 void MainWindow::on_selectSellCryptoButton_clicked()
 {
-   ui->cryptoSellLabel->setText("Tililläsi on "+objectDLLRestAPI->getBalance()+" kryptovaluuttaa\n"
+   ui->cryptoSellLabel->setText("Tililläsi on "+objectDLLRestAPI->getCryptoBalance()+" kryptovaluuttaa\n"
                                 "Kryptovaluutan kurssi on 1 = "+objectDLLRestAPI->getRate()+"€");
    ui->stackedWidget->setCurrentIndex(5);
    ui->keypad->show();
