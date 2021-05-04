@@ -8,6 +8,11 @@ const card={
 
     getCryptoAccount: function(id, callback){
         return database.query('select cryptoaccount.id_cryptoaccount from cryptoaccount join card on cryptoaccount.id_cryptoaccount = card.id_cryptoaccount where id_card=?',[id],callback);
+    },
+
+    lock: function(id, callback){
+        return database.query('UPDATE card SET locked = 1 WHERE id_card=?',[id],callback);
+
     }
 
 };
