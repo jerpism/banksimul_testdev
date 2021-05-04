@@ -34,6 +34,23 @@ router.get('/getCryptoAccount/:id',
     }
 );
 
+router.put('/lock/:id',
+    function(request, response){
+        card.lock(request.params.id, function(err,dbResult){
+            if(err){
+                response.json(err.errno);
+            }else if(!dbResult){
+                console.log("Card not found");
+                response.json("Card not found");
+            }else{
+                console.log(dbResult);
+                response.json(dbResult.affectedRows);
+            }
+        })
+    }
+);
+            
+
 
 module.exports = router;
 
