@@ -377,3 +377,9 @@ void MainWindow::on_transferAmountButton_clicked()
    stopTimer();
    objectDLLRestAPI->transferMoney(ui->transferLineEdit->text(), ui->transferAmountLineEdit->text());
 }
+
+void MainWindow::on_sellCryptoButton_clicked()
+{
+   stopTimer();
+   objectDLLRestAPI->sellCrypto(ui->sellCryptoLineEdit->text());
+}

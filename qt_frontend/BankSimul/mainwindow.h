@@ -96,6 +96,8 @@ private slots:
 
     void on_transferAmountButton_clicked();
 
+    void on_sellCryptoButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     DLLRestAPI *objectDLLRestAPI;
