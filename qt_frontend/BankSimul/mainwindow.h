@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "dllrestapi.h"
+#include "dllserialport.h"
 #include <QLineEdit>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,6 +21,7 @@ public:
     void stopTimer();
     void handleClick();
     void clearLineEdits();
+    void openSerial();
 
 private slots:
     void on_loginButton_clicked();
@@ -30,6 +32,7 @@ private slots:
 
     void on_withdraw20Button_clicked();
 
+    void serialDataSlot(QString);
     void receivedInfoSlot();
     void errorSlot(QString);
     void successSlot(QString);
@@ -109,9 +112,11 @@ private slots:
 private:
     Ui::MainWindow *ui;
     DLLRestAPI *objectDLLRestAPI;
+    DLLSerialport *objectDLLSerialport;
     QTimer *timer;
     QTimer *menuTimer;
     QList <QLineEdit*> lineEdits;
+    QString card;
     short lineEditFocus;
     short n1;
 };

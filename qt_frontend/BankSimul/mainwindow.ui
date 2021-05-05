@@ -63,7 +63,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Syötä kortti</string>
+           <string>Syötä PIN-koodi</string>
           </property>
          </widget>
         </item>
@@ -1183,6 +1183,26 @@ Tililläsi on x euroa</string>
           </property>
           <property name="text">
            <string>Sulje</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="showBalancePage"/>
+      <widget class="QWidget" name="insertCardPage">
+       <layout class="QGridLayout" name="gridLayout_11">
+        <item row="0" column="0">
+         <widget class="QLabel" name="cardLabel">
+          <property name="font">
+           <font>
+            <pointsize>58</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Lue kortti</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>

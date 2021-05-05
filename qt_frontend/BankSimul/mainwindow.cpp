@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     objectDLLRestAPI = new DLLRestAPI;
+    objectDLLSerialport = new DLLSerialport;
     timer = new QTimer(this);
     menuTimer = new QTimer(this);
 
@@ -26,9 +27,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(objectDLLRestAPI, SIGNAL(infoReceived()), this, SLOT(receivedInfoSlot()));
     connect(objectDLLRestAPI, SIGNAL(errorSignal(QString)), this, SLOT(errorSlot(QString)));
     connect(objectDLLRestAPI, SIGNAL(successSignal(QString)), this, SLOT(successSlot(QString)));
+    connect(objectDLLSerialport, SIGNAL(serialportDataReadDone(QString)), this, SLOT(serialDataSlot(QString)));
 
-    ui->keypad->show();
-    lineEditFocus = 0; //Aseta näppäimistö toimimaan kirjautumisnäytön lineEdittiin
+    ui->keypad->hide();
+
+    ui->stackedWidget->setCurrentIndex(12);
+    openSerial();
+
 }
 
 MainWindow::~MainWindow()
@@ -39,6 +44,22 @@ MainWindow::~MainWindow()
     ui=nullptr;
     objectDLLRestAPI=nullptr;
     timer=nullptr;
+}
+
+void MainWindow::openSerial()
+{
+    objectDLLSerialport->openSerialPort();
+}
+
+void MainWindow::serialDataSlot(QString data){
+    qDebug() << "serial data: "+data;
+    objectDLLSerialport->closeSerialPort();
+    card = data;
+    ui->stackedWidget->setCurrentIndex(0);
+    ui->keypad->show();
+    lineEditFocus = 0; //Aseta näppäimistö toimimaan kirjautumisnäytön lineEdittiin
+    startMenuIdleTimer();
+
 }
 
 void MainWindow::startIdleTimer()
@@ -74,14 +95,16 @@ void MainWindow::logout()
 {
     stopTimer();
     objectDLLRestAPI->logout();
-    ui->stackedWidget->setCurrentIndex(0);
-    ui->keypad->show();
+    ui->keypad->hide();
     clearLineEdits();
+    card="";
+    objectDLLSerialport->openSerialPort();
+    ui->stackedWidget->setCurrentIndex(12);
 }
+
 void MainWindow::receivedInfoSlot()
 {
    ui->menulabel->setText("Tervetuloa "+objectDLLRestAPI->getName());
-
 }
 
 void MainWindow::errorSlot(QString response)
@@ -125,13 +148,15 @@ void MainWindow::returnToMenu()
  * 8 onnistuminen
  * 9 virhe
  * 10 tapahtumat
+ * 11 näytä saldo
+ * 12 syötä kortti
  * */
 
 void MainWindow::on_loginButton_clicked()
 {
    ui->keypad->hide();
    ui->stackedWidget->setCurrentIndex(1);
-   objectDLLRestAPI->login("06000641D4", "1234");
+   objectDLLRestAPI->login(card, ui->loginLineEdit->text());
    startMenuIdleTimer();
 }
 

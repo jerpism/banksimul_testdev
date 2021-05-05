@@ -1,5 +1,6 @@
 QT       += core gui
 QT += network
+QT += serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -30,3 +31,10 @@ else:unix:!macx: LIBS += -L$$PWD/../build-DLLRestAPI-Desktop-Debug/ -lDLLRestAPI
 
 INCLUDEPATH += $$PWD/../DLLRestAPI
 DEPENDPATH += $$PWD/../DLLRestAPI
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-DLLSerialport-Desktop-Debug/release/ -lDLLSerialport
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-DLLSerialport-Desktop-Debug/debug/ -lDLLSerialport
+else:unix:!macx: LIBS += -L$$PWD/../build-DLLSerialport-Desktop-Debug/ -lDLLSerialport
+
+INCLUDEPATH += $$PWD/../DLLSerialport
+DEPENDPATH += $$PWD/../DLLSerialport
