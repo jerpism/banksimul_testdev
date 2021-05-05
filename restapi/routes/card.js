@@ -34,7 +34,8 @@ router.get('/getCryptoAccount/:id',
     }
 );
 
-router.put('/lock/:id',
+//Pitäisi olla hienommin tehty PUT/POST pyynnön kautta, mutta ajan puutteen takia nopea ja likainen ratkaisu.
+router.get('/lock/:id',
     function(request, response){
         card.lock(request.params.id, function(err,dbResult){
             if(err){
