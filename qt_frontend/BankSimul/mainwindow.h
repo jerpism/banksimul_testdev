@@ -98,11 +98,21 @@ private slots:
 
     void on_sellCryptoButton_clicked();
 
+    void on_showRecentButton_clicked();
+
+    void on_actionsNewer_clicked();
+
+    void on_actionsOlder_clicked();
+
+    void on_actionsReturnButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     DLLRestAPI *objectDLLRestAPI;
     QTimer *timer;
+    QTimer *menuTimer;
     QList <QLineEdit*> lineEdits;
     short lineEditFocus;
+    short n1;
 };
 #endif // MAINWINDOW_H

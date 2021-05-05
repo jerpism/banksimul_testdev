@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     objectDLLRestAPI = new DLLRestAPI;
     timer = new QTimer(this);
+    menuTimer = new QTimer(this);
 
     /* lineEditit
      * 0 login
@@ -25,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(objectDLLRestAPI, SIGNAL(infoReceived()), this, SLOT(receivedInfoSlot()));
     connect(objectDLLRestAPI, SIGNAL(errorSignal(QString)), this, SLOT(errorSlot(QString)));
     connect(objectDLLRestAPI, SIGNAL(successSignal(QString)), this, SLOT(successSlot(QString)));
+
     ui->keypad->show();
     lineEditFocus = 0; //Aseta näppäimistö toimimaan kirjautumisnäytön lineEdittiin
 }
@@ -48,14 +50,15 @@ void MainWindow::startIdleTimer()
 
 void MainWindow::startMenuIdleTimer()
 {
-    connect(timer, SIGNAL(timeout()), this, SLOT(logout()));
-    timer->start(30000);
+    connect(menuTimer, SIGNAL(timeout()), this, SLOT(logout()));
+    menuTimer->start(30000);
     qDebug() << "MenuIdleTimer aloitettu";
 }
 
 void MainWindow::stopTimer()
 {
     timer->stop();
+    menuTimer->stop();
     qDebug() << "Ajastin pysäytetty";
 }
 
@@ -121,6 +124,7 @@ void MainWindow::returnToMenu()
  * 7 tilisiirto 2
  * 8 onnistuminen
  * 9 virhe
+ * 10 tapahtumat
  * */
 
 void MainWindow::on_loginButton_clicked()
@@ -382,4 +386,47 @@ void MainWindow::on_sellCryptoButton_clicked()
 {
    stopTimer();
    objectDLLRestAPI->sellCrypto(ui->sellCryptoLineEdit->text());
+}
+
+void MainWindow::on_showRecentButton_clicked()
+{
+   n1=0;
+   ui->stackedWidget->setCurrentIndex(10);
+   ui->actionsLabel->setText(objectDLLRestAPI->getRecent(n1,10));
+   ui->actionsNewer->setDisabled(true);
+   startIdleTimer();
+}
+
+void MainWindow::on_actionsNewer_clicked()
+{
+   startIdleTimer();
+   ui->actionsOlder->setDisabled(false);
+
+   if(n1-20<0){
+       ui->actionsNewer->setDisabled(true);
+   }
+
+   if(n1-10>=0){
+       n1-=10;
+   }
+   ui->actionsLabel->setText(objectDLLRestAPI->getRecent(n1,10));
+}
+
+void MainWindow::on_actionsOlder_clicked()
+{
+   startIdleTimer();
+
+   ui->actionsNewer->setDisabled(false);
+
+   if(objectDLLRestAPI->getRecent(n1+20,10).isEmpty()){
+       ui->actionsOlder->setDisabled(true);
+   }
+   n1+=10;
+   ui->actionsLabel->setText(objectDLLRestAPI->getRecent(n1,10));
+}
+
+
+void MainWindow::on_actionsReturnButton_clicked()
+{
+   returnToMenu();
 }

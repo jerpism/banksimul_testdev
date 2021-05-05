@@ -16,6 +16,7 @@ public:
     QString getName();
     QString getAddr();
     QString getPhone();
+    QString getRecent(int, int);
 
     void login(QString, QString);
     void logout();
