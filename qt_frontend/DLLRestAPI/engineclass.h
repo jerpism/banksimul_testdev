@@ -32,10 +32,11 @@ public:
     void transferMoney(QString, QString);
     bool accountExists(QString);
     void getInfo();
+    void lockCard(QString);
 
 signals:
     void gotInfo();
-    void loginSignal(bool);
+    void loginSignal(QString);
     void errorSignal(QString);
     void successSignal(QString);
 
@@ -48,6 +49,7 @@ private slots:
     void cryptoSlot();
     void transferSlot();
     void infoSlot();
+    void lockSlot();
 
 private:
     void setAccount(QString);
@@ -78,6 +80,7 @@ private:
     QNetworkReply *existsReply;
     QNetworkReply *infoReply;
     QNetworkReply *actionsReply;
+    QNetworkReply *lockReply;
 
 };
 

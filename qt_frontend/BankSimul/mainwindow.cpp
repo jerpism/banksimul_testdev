@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(objectDLLRestAPI, SIGNAL(infoReceived()), this, SLOT(receivedInfoSlot()));
     connect(objectDLLRestAPI, SIGNAL(errorSignal(QString)), this, SLOT(errorSlot(QString)));
     connect(objectDLLRestAPI, SIGNAL(successSignal(QString)), this, SLOT(successSlot(QString)));
+    connect(objectDLLRestAPI, SIGNAL(loginSignal(QString)), this, SLOT(loginSlot(QString)));
     connect(objectDLLSerialport, SIGNAL(serialportDataReadDone(QString)), this, SLOT(serialDataSlot(QString)));
 
     ui->keypad->hide();
@@ -44,6 +45,26 @@ MainWindow::~MainWindow()
     ui=nullptr;
     objectDLLRestAPI=nullptr;
     timer=nullptr;
+}
+
+void MainWindow::loginSlot(QString response){
+    if(response == "true"){
+        ui->keypad->hide();
+        ui->stackedWidget->setCurrentIndex(1);
+        startMenuIdleTimer();
+        failCount = 0;
+    }else if(response == "false"){
+        ui->loginLabel->setText("Virheellinen PIN-koodi");
+        QTimer::singleShot(5000, this, [&](){ui->loginLabel->setText("Syötä PIN-koodi");});
+        failCount++;
+        if(failCount == 3){
+            qDebug() << "lukitse kortti "+card;
+            objectDLLRestAPI->lockCard(card);
+        }
+    }else if(response == "locked"){
+        ui->loginLabel->setText("Korttisi on lukittu");
+    }
+
 }
 
 void MainWindow::openSerial()
@@ -98,6 +119,7 @@ void MainWindow::logout()
     ui->keypad->hide();
     clearLineEdits();
     card="";
+    failCount = 0;
     objectDLLSerialport->openSerialPort();
     ui->stackedWidget->setCurrentIndex(12);
 }
@@ -158,10 +180,7 @@ void MainWindow::returnToMenu()
 
 void MainWindow::on_loginButton_clicked()
 {
-   ui->keypad->hide();
-   ui->stackedWidget->setCurrentIndex(1);
    objectDLLRestAPI->login(card, ui->loginLineEdit->text());
-   startMenuIdleTimer();
 }
 
 void MainWindow::on_withdrawButton_clicked()

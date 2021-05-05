@@ -24,6 +24,7 @@ public:
     void buyCrypto(QString);
     void sellCrypto(QString);
     void transferMoney(QString, QString);
+    void lockCard(QString);
     bool accountExists(QString);
 
 private:
@@ -31,13 +32,13 @@ private:
 
 private slots:
     void gotInfoSlot();
-    void loginSlot(bool);
+    void loginSlot(QString);
     void errorSlot(QString);
     void successSlot(QString);
 
 signals:
     void infoReceived();
-    void loginSignal(bool);
+    void loginSignal(QString);
     void errorSignal(QString);
     void successSignal(QString);
 };

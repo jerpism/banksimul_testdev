@@ -24,6 +24,7 @@ public:
     void openSerial();
 
 private slots:
+    void loginSlot(QString);
     void on_loginButton_clicked();
 
     void on_withdrawButton_clicked();
@@ -123,5 +124,6 @@ private:
     QString card;
     short lineEditFocus;
     short n1;
+    short failCount=0;
 };
 #endif // MAINWINDOW_H
