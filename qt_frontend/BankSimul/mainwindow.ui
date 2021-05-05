@@ -495,7 +495,7 @@ Valitse nostettava rahasumma</string>
            </font>
           </property>
           <property name="text">
-           <string>Palaa</string>
+           <string>Sulje</string>
           </property>
          </widget>
         </item>
@@ -580,7 +580,7 @@ Valitse nostettava rahasumma</string>
            </font>
           </property>
           <property name="text">
-           <string>Palaa</string>
+           <string>Sulje</string>
           </property>
          </widget>
         </item>
@@ -697,7 +697,7 @@ Kryptovaluutan kurssi</string>
            </font>
           </property>
           <property name="text">
-           <string>Palaa</string>
+           <string>Sulje</string>
           </property>
          </widget>
         </item>
@@ -812,7 +812,7 @@ Kryptovaluutan kurssi on 1 kryptovaluutta = x euroa</string>
            </font>
           </property>
           <property name="text">
-           <string>Palaa</string>
+           <string>Sulje</string>
           </property>
          </widget>
         </item>
@@ -934,7 +934,7 @@ Kryptovaluutan kurssi on 1 kryptovaluutta = x euroa</string>
            </font>
           </property>
           <property name="text">
-           <string>Palaa</string>
+           <string>Sulje</string>
           </property>
          </widget>
         </item>
