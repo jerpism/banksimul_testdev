@@ -105,6 +105,10 @@ void MainWindow::logout()
 void MainWindow::receivedInfoSlot()
 {
    ui->menulabel->setText("Tervetuloa "+objectDLLRestAPI->getName());
+   ui->infoLabel->setText("Nimi: "+objectDLLRestAPI->getName()+"\n"
+                          "Osoite: "+objectDLLRestAPI->getAddr()+"\n"
+                          "Puh.: "+objectDLLRestAPI->getPhone());
+
 }
 
 void MainWindow::errorSlot(QString response)
@@ -452,6 +456,21 @@ void MainWindow::on_actionsOlder_clicked()
 
 
 void MainWindow::on_actionsReturnButton_clicked()
+{
+   returnToMenu();
+}
+
+void MainWindow::on_showBalanceButton_clicked()
+{
+   ui->balanceLabel->setText("Tililläsi on "+objectDLLRestAPI->getBalance()+"€"+"\n"
+                             "Kryptotililläsi on "+objectDLLRestAPI->getCryptoBalance()+" kryptovaluuttaa.");
+   ui->recentLabel->setText(objectDLLRestAPI->getRecent(0,5));
+
+   ui->stackedWidget->setCurrentIndex(11);
+   startIdleTimer();
+}
+
+void MainWindow::on_balanceReturnButton_clicked()
 {
    returnToMenu();
 }

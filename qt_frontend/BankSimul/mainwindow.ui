@@ -495,7 +495,7 @@ Valitse nostettava rahasumma</string>
            </font>
           </property>
           <property name="text">
-           <string>Palaa</string>
+           <string>Sulje</string>
           </property>
          </widget>
         </item>
@@ -580,7 +580,7 @@ Valitse nostettava rahasumma</string>
            </font>
           </property>
           <property name="text">
-           <string>Palaa</string>
+           <string>Sulje</string>
           </property>
          </widget>
         </item>
@@ -697,7 +697,7 @@ Kryptovaluutan kurssi</string>
            </font>
           </property>
           <property name="text">
-           <string>Palaa</string>
+           <string>Sulje</string>
           </property>
          </widget>
         </item>
@@ -812,7 +812,7 @@ Kryptovaluutan kurssi on 1 kryptovaluutta = x euroa</string>
            </font>
           </property>
           <property name="text">
-           <string>Palaa</string>
+           <string>Sulje</string>
           </property>
          </widget>
         </item>
@@ -934,7 +934,7 @@ Kryptovaluutan kurssi on 1 kryptovaluutta = x euroa</string>
            </font>
           </property>
           <property name="text">
-           <string>Palaa</string>
+           <string>Sulje</string>
           </property>
          </widget>
         </item>
@@ -1188,7 +1188,79 @@ Tililläsi on x euroa</string>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="showBalancePage"/>
+      <widget class="QWidget" name="showBalancePage">
+       <layout class="QGridLayout" name="gridLayout_12">
+        <item row="0" column="0" alignment="Qt::AlignVCenter">
+         <widget class="QLabel" name="infoLabel">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Tiedot</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="recentLabel">
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Tapahtumat</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" alignment="Qt::AlignVCenter">
+         <widget class="QLabel" name="balanceLabel">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Saldo</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignHCenter|Qt::AlignTop</set>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" alignment="Qt::AlignHCenter|Qt::AlignBottom">
+         <widget class="QPushButton" name="balanceReturnButton">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+            <horstretch>60</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>60</width>
+            <height>60</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Sulje</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="insertCardPage">
        <layout class="QGridLayout" name="gridLayout_11">
         <item row="0" column="0">

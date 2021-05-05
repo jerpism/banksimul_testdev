@@ -109,6 +109,10 @@ private slots:
 
     void on_actionsReturnButton_clicked();
 
+    void on_showBalanceButton_clicked();
+
+    void on_balanceReturnButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     DLLRestAPI *objectDLLRestAPI;
