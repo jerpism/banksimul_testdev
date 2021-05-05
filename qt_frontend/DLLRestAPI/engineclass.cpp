@@ -59,11 +59,14 @@ void EngineClass::loginSlot(){
         this->setAccount(cardid);
         this->setCryptoAccount(cardid);
         this->getInfo();
-        emit loginSignal(true);
-    }else{
+        emit loginSignal("true");
+    }else if(response_data == "false"){
     //Jos palvelin taas vastaa FALSE, niin kerrotaan pääohjelmalle, että kirjautuminen ei onnistunut
         this->logout();
-        emit loginSignal(false);
+        emit loginSignal("false");
+    }else if(response_data == "locked"){
+        this->logout();
+        emit loginSignal("locked");
     }
 
     loginReply->deleteLater();
@@ -507,3 +510,26 @@ QString EngineClass::getRecent(QString n1, QString n2)
    return actions;
 }
 
+void EngineClass::lockCard(QString card){
+   QNetworkRequest request(url+"/card/lock/"+card);
+   request.setSslConfiguration(config);
+   request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+   QByteArray data = credentials.toLocal8Bit().toBase64();
+   QString headerData = "Basic " + data;
+
+   request.setRawHeader("Authorization", headerData.toLocal8Bit());
+
+   lockReply = networkManager->get(request);
+   connect(lockReply, SIGNAL(finished()), SLOT(lockSlot()));
+}
+
+void EngineClass::lockSlot(){
+    QByteArray response_data = lockReply->readAll();
+    if(response_data == "1"){
+        qDebug() << "Kortti lukittu";
+    }else{
+        qDebug() << "Virhe lukitsemisessa";
+    }
+
+    lockReply->deleteLater();
+}

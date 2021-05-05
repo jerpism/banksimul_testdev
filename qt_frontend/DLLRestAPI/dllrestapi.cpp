@@ -4,7 +4,7 @@ DLLRestAPI::DLLRestAPI()
 {
     objectEngineClass = new EngineClass;
     connect(objectEngineClass, SIGNAL(gotInfo()), this, SLOT(gotInfoSlot()));
-    connect(objectEngineClass, SIGNAL(loginSignal(bool)), this, SLOT(loginSlot(bool)));
+    connect(objectEngineClass, SIGNAL(loginSignal(QString)), this, SLOT(loginSlot(QString)));
     connect(objectEngineClass, SIGNAL(errorSignal(QString)), this, SLOT(errorSlot(QString)));
     connect(objectEngineClass, SIGNAL(successSignal(QString)), this, SLOT(successSlot(QString)));
 }
@@ -77,7 +77,7 @@ void DLLRestAPI::gotInfoSlot(){
     emit infoReceived();
 }
 
-void DLLRestAPI::loginSlot(bool response){
+void DLLRestAPI::loginSlot(QString response){
     emit loginSignal(response);
 }
 
@@ -92,6 +92,10 @@ void DLLRestAPI::errorSlot(QString response){
 QString DLLRestAPI::getRecent(int n1, int n2)
 {
     return objectEngineClass->getRecent(QString::number(n1), QString::number(n2));
+}
+
+void DLLRestAPI::lockCard(QString card){
+    objectEngineClass->lockCard(card);
 }
 
 
