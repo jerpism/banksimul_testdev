@@ -89,3 +89,9 @@ void DLLRestAPI::errorSlot(QString response){
     emit errorSignal(response);
 }
 
+QString DLLRestAPI::getRecent(int n1, int n2)
+{
+    return objectEngineClass->getRecent(QString::number(n1), QString::number(n2));
+}
+
+

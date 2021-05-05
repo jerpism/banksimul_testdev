@@ -22,6 +22,7 @@ public:
     QString getName();
     QString getAddr();
     QString getPhone();
+    QString getRecent(QString, QString);
 
     void login(QString, QString);
     void logout();
@@ -76,6 +77,7 @@ private:
     QNetworkReply *transferReply;
     QNetworkReply *existsReply;
     QNetworkReply *infoReply;
+    QNetworkReply *actionsReply;
 
 };
 

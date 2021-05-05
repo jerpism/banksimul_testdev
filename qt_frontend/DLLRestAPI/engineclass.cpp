@@ -94,6 +94,7 @@ double EngineClass::getBalance()
 
     //Luetaan vastaus
     QString response = balanceReply->readAll();
+    qDebug() << "tili on: "+account;
     qDebug() << "balance vastaus: "+response;
 
     balanceReply->deleteLater();
@@ -473,3 +474,36 @@ QString EngineClass::getAddr(){
 QString EngineClass::getPhone(){
     return phone;
 }
+
+QString EngineClass::getRecent(QString n1, QString n2)
+{
+   QNetworkRequest request(url+"/actions/getRecent/"+account+"&"+n1+"&"+n2);
+   request.setSslConfiguration(config);
+   request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+   QByteArray data = credentials.toLocal8Bit().toBase64();
+   QString headerData = "Basic " + data;
+
+   request.setRawHeader("Authorization", headerData.toLocal8Bit());
+   QEventLoop loop;
+
+   actionsReply = networkManager->get(request);
+
+   connect(actionsReply, SIGNAL(finished()), &loop, SLOT(quit()));
+   loop.exec();
+
+   QByteArray response_data=actionsReply->readAll();
+   qDebug() << "actions reply: "+response_data;
+
+   QJsonDocument json_doc=QJsonDocument::fromJson(response_data);
+   QJsonArray json_array=json_doc.array();
+   QString actions;
+
+   foreach(const QJsonValue &value, json_array){
+       QJsonObject json_obj=value.toObject();
+       actions += "Määrä: "+QString::number((json_obj["amount"].toDouble()))+"\nPvm: "+json_obj["date"].toString()+"\nTapahtuma: "+json_obj["action_type"].toString()+"\r\n\n";
+   }
+
+   actionsReply->deleteLater();
+   return actions;
+}
+
