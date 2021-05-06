@@ -99,3 +99,8 @@ void DLLRestAPI::lockCard(QString card){
 }
 
 
+int DLLRestAPI::actionCount(){
+    return objectEngineClass->actionCount();
+}
+
+

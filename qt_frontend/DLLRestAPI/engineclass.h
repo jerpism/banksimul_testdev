@@ -19,6 +19,7 @@ public:
     double getBalance();
     double getCryptoBalance();
     double getRate();
+    int actionCount();
     QString getName();
     QString getAddr();
     QString getPhone();
@@ -81,6 +82,7 @@ private:
     QNetworkReply *infoReply;
     QNetworkReply *actionsReply;
     QNetworkReply *lockReply;
+    QNetworkReply *actionCountReply;
 
 };
 
