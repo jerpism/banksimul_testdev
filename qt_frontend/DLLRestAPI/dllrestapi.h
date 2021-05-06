@@ -19,6 +19,7 @@ public:
     QString getRecent(int, int);
 
     void login(QString, QString);
+    int actionCount();
     void logout();
     void withdrawMoney(QString);
     void buyCrypto(QString);

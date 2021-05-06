@@ -471,7 +471,11 @@ void MainWindow::on_actionsOlder_clicked()
 
    ui->actionsNewer->setDisabled(false);
 
-   if(objectDLLRestAPI->getRecent(n1+20,10).isEmpty()){
+//   if(objectDLLRestAPI->getRecent(n1+20,10).isEmpty()){
+ //      ui->actionsOlder->setDisabled(true);
+ //  }
+
+   if(n1+20 > objectDLLRestAPI->actionCount()){
        ui->actionsOlder->setDisabled(true);
    }
    n1+=10;

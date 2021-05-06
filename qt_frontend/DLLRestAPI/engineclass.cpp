@@ -535,3 +535,25 @@ void EngineClass::lockSlot(){
 
     lockReply->deleteLater();
 }
+
+int EngineClass::actionCount(){
+   QNetworkRequest request(url+"/actions/getCount/"+account);
+   request.setSslConfiguration(config);
+   request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+   QByteArray data = credentials.toLocal8Bit().toBase64();
+   QString headerData = "Basic " + data;
+
+   request.setRawHeader("Authorization", headerData.toLocal8Bit());
+
+   actionCountReply = networkManager->get(request);
+   QEventLoop loop;
+
+   connect(actionCountReply, SIGNAL(finished()), &loop, SLOT(quit()));
+   loop.exec();
+
+   QByteArray response_data = actionCountReply->readAll();
+   qDebug() << "ActionCountReply " + response_data;
+   actionCountReply->deleteLater();
+   return response_data.toInt();
+
+}
