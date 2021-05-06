@@ -14,6 +14,8 @@ EngineClass::EngineClass()
 
 EngineClass::~EngineClass()
 {
+    delete networkManager;
+    networkManager = nullptr;
 
 }
 

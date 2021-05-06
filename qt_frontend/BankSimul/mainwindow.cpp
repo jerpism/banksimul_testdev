@@ -42,6 +42,8 @@ MainWindow::~MainWindow()
     delete ui;
     delete objectDLLRestAPI;
     delete timer;
+    delete objectDLLSerialport;
+    objectDLLRestAPI=nullptr;
     ui=nullptr;
     objectDLLRestAPI=nullptr;
     timer=nullptr;
@@ -122,6 +124,7 @@ void MainWindow::logout()
     failCount = 0;
     objectDLLSerialport->openSerialPort();
     ui->stackedWidget->setCurrentIndex(12);
+    ui->loginLabel->setText("Syötä PIN-koodi");
 }
 
 void MainWindow::receivedInfoSlot()
@@ -259,7 +262,9 @@ void MainWindow::handleClick()
         teksti.append(nappi.at(1));
     }
 
-    if(ui->stackedWidget->currentIndex() != 0){
+    if(ui->stackedWidget->currentIndex() == 0){
+        startMenuIdleTimer();
+    }else{
         startIdleTimer();
     }
 
