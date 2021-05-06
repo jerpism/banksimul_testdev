@@ -39,6 +39,18 @@ router.get('/getRecent/:id',
         });
     });
 
+router.get('/getCount/:id',
+    function(request, response){
+        actions.getRecentCount(request.params.id, function(err, dbResult){
+            if(err){
+                response.json(err);
+            }else{
+                response.json(dbResult[0].lkm);
+            }
+        });
+    });
+
+
 module.exports = router;
 
 
