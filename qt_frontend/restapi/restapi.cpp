@@ -3,7 +3,7 @@
 Restapi::Restapi()
 {
     credentials="admin:1234";
-    url = "https://91.145.117.152:3443";
+    url = "REPLACEME";
     //Asetetaan salattua yhteyttä varten tarvittavat asetukset
     config = QSslConfiguration::defaultConfiguration();
     //Tarvitaan, koska palvelimella on käytössä oma SSL cert.
